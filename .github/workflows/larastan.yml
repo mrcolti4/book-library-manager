@@ -1,0 +1,21 @@
+name: Larastan Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  larastan:
+    runs-on: ubuntu-latest
+
+    needs: setup
+    steps:
+      - name: Download Setup Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: setup-artifact
+      - name: Extraction
+        run: tar -xvf setup.tar
+      - name: Running Phpstan
+        run: ./vendor/bin/phpstan analyse

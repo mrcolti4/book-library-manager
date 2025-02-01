@@ -1,12 +1,11 @@
 import ButtonWrapper from "@/Components/Auth/ButtonWrapper";
+import InputField from "@/Components/Auth/InputField";
 import Checkbox from "@/Components/Checkbox";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import InputWrapper from "@/Components/InputWrapper";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import AuthLayout from "@/Layouts/AuthLayout";
+import { Icon } from "@iconify/react";
 import { Head, Link, useForm } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -14,6 +13,7 @@ export default function Login({ status, canResetPassword }) {
         password: "",
         remember: false,
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     const submit = (e) => {
         e.preventDefault();
@@ -34,39 +34,27 @@ export default function Login({ status, canResetPassword }) {
             )}
 
             <form className="flex flex-col grow" onSubmit={submit}>
-                <div>
-                    <InputWrapper labelValue={"Email: "}>
-                        <TextInput
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={data.email}
-                            className="mt-1 block w-full"
-                            autoComplete="username"
-                            isFocused={true}
-                            onChange={(e) => setData("email", e.target.value)}
-                        />
-                    </InputWrapper>
+                <div class="grid gap-4">
+                    <InputField
+                        id="email"
+                        label="Email: "
+                        type="text"
+                        error={errors.email}
+                        data={data.email}
+                        setData={setData}
+                    />
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputWrapper labelValue={"Password: "}>
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            value={data.password}
-                            className="mt-1 block w-full"
-                            autoComplete="current-password"
-                            onChange={(e) =>
-                                setData("password", e.target.value)
-                            }
-                        />
-                    </InputWrapper>
-
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputField
+                        id="password"
+                        label="Password "
+                        type={showPassword ? "text" : "password"}
+                        error={errors.password}
+                        data={data.password}
+                        setData={setData}
+                        isPassword={true}
+                        showPassword={showPassword}
+                        setShowPassword={setShowPassword}
+                    />
                 </div>
 
                 <ButtonWrapper>

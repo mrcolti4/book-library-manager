@@ -1,11 +1,10 @@
 import ButtonWrapper from "@/Components/Auth/ButtonWrapper";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import InputWrapper from "@/Components/InputWrapper";
+import InputField from "@/Components/Auth/InputField";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import AuthLayout from "@/Layouts/AuthLayout";
+import { Icon } from "@iconify/react";
 import { Head, Link, useForm } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -14,6 +13,7 @@ export default function Register() {
         password: "",
         password_confirmation: "",
     });
+    const [showPassword, setShowPassword] = useState(false);
 
     const submit = (e) => {
         e.preventDefault();
@@ -28,58 +28,37 @@ export default function Register() {
             <Head title="Register" />
 
             <form className="flex flex-col grow" onSubmit={submit}>
-                <div>
-                    <InputWrapper labelValue={"Name: "}>
-                        <TextInput
-                            id="name"
-                            name="name"
-                            value={data.name}
-                            className="mt-1 block w-full"
-                            autoComplete="name"
-                            isFocused={true}
-                            onChange={(e) => setData("name", e.target.value)}
-                            required
-                        />
-                    </InputWrapper>
-                    <InputError message={errors.name} className="mt-2" />
+                <div class="grid gap-4">
+                    <InputField
+                        id="name"
+                        label="Name: "
+                        type="text"
+                        error={errors.name}
+                        data={data.name}
+                        setData={setData}
+                    />
+
+                    <InputField
+                        id="email"
+                        label="Email: "
+                        type="text"
+                        error={errors.email}
+                        data={data.email}
+                        setData={setData}
+                    />
+
+                    <InputField
+                        id="password"
+                        label="Password "
+                        type={showPassword ? "text" : "password"}
+                        error={errors.password}
+                        data={data.password}
+                        setData={setData}
+                        isPassword={true}
+                        showPassword={showPassword}
+                        setShowPassword={setShowPassword}
+                    />
                 </div>
-
-                <div className="mt-4">
-                    <InputWrapper labelValue={"Email: "}>
-                        <TextInput
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={data.email}
-                            className="mt-1 block w-full"
-                            autoComplete="username"
-                            onChange={(e) => setData("email", e.target.value)}
-                            required
-                        />
-                    </InputWrapper>
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputWrapper labelValue={"Password: "}>
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            value={data.password}
-                            className="mt-1 block w-full"
-                            autoComplete="username"
-                            onChange={(e) =>
-                                setData("password", e.target.value)
-                            }
-                            required
-                        />
-                    </InputWrapper>
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
                 <ButtonWrapper>
                     <PrimaryButton
                         className="ms-4 text-sm py-3 px-[29px] bg-white md:px-[54px] rounded-[30px] text-gray-900 md:py-4 md:text-xl md:leading-[20px]"

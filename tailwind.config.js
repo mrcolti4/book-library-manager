@@ -26,6 +26,7 @@ export default {
                     900: "#1F1F1F", // charcoal black
                     950: "#141414", // near black
                 },
+                red: "#E90516",
             },
             opacity: {
                 30: "30",

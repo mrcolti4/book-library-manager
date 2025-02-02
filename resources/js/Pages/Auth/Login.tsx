@@ -1,13 +1,15 @@
 import ButtonWrapper from "@/Components/Auth/ButtonWrapper";
 import InputField from "@/Components/Auth/InputField";
-import Checkbox from "@/Components/Checkbox";
 import PrimaryButton from "@/Components/PrimaryButton";
 import AuthLayout from "@/Layouts/AuthLayout";
-import { Icon } from "@iconify/react";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 
-export default function Login({ status, canResetPassword }) {
+type params = {
+    status: string;
+};
+
+export default function Login({ status }: params) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -15,7 +17,7 @@ export default function Login({ status, canResetPassword }) {
     });
     const [showPassword, setShowPassword] = useState(false);
 
-    const submit = (e) => {
+    const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         post(route("login"), {

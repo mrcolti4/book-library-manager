@@ -2,9 +2,8 @@ import ButtonWrapper from "@/Components/Auth/ButtonWrapper";
 import InputField from "@/Components/Auth/InputField";
 import PrimaryButton from "@/Components/PrimaryButton";
 import AuthLayout from "@/Layouts/AuthLayout";
-import { Icon } from "@iconify/react";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,7 +14,7 @@ export default function Register() {
     });
     const [showPassword, setShowPassword] = useState(false);
 
-    const submit = (e) => {
+    const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         post(route("register"), {

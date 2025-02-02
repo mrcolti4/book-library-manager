@@ -34,7 +34,7 @@ export default function Login({ status, canResetPassword }) {
             )}
 
             <form className="flex flex-col grow" onSubmit={submit}>
-                <div class="grid gap-4">
+                <div className="grid gap-4">
                     <InputField
                         id="email"
                         label="Email: "

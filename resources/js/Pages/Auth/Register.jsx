@@ -28,7 +28,7 @@ export default function Register() {
             <Head title="Register" />
 
             <form className="flex flex-col grow" onSubmit={submit}>
-                <div class="grid gap-4">
+                <div className="grid gap-4">
                     <InputField
                         id="name"
                         label="Name: "

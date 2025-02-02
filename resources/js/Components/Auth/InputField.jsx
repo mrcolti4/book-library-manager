@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react";
-import InputWrapper from "../InputWrapper";
 import TextInput from "../TextInput";
 import InputError from "../InputError";
+import { useEffect, useRef, useState } from "react";
+import InputLabel from "../InputLabel";
 
 export default function InputField({
     id,
@@ -14,9 +15,24 @@ export default function InputField({
     showPassword = false,
     setShowPassword = {},
 }) {
+    const [padding, setPadding] = useState(0);
+    const labelRef = useRef(null);
+
+    useEffect(() => {
+        if (labelRef.current) {
+            const labelWidth = labelRef.current.offsetWidth;
+            setPadding(labelWidth + 15);
+        }
+    }, []);
+
     return (
         <div>
-            <InputWrapper labelValue={label}>
+            <div className="relative">
+                <InputLabel
+                    className="absolute left-3 text-dark-700 top-1/2 -translate-y-1/2"
+                    value={label}
+                    ref={labelRef}
+                />
                 <TextInput
                     id={id}
                     name={name}
@@ -28,6 +44,9 @@ export default function InputField({
                     isFocused={true}
                     onChange={(e) => setData(id, e.target.value)}
                     required
+                    style={{
+                        paddingLeft: `${padding}px`,
+                    }}
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-3 items-center justify-center">
                     {isPassword ? (
@@ -56,7 +75,7 @@ export default function InputField({
                         />
                     )}
                 </div>
-            </InputWrapper>
+            </div>
             <InputError message={error} className="mt-2" />
         </div>
     );

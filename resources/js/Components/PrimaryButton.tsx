@@ -1,9 +1,15 @@
+type props = {
+    className: string;
+    disabled: boolean;
+    children: React.ReactNode;
+};
+
 export default function PrimaryButton({
     className = "",
     disabled,
     children,
     ...props
-}) {
+}: props) {
     return (
         <button
             {...props}

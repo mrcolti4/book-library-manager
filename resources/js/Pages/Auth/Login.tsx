@@ -61,7 +61,7 @@ export default function Login({ status }: params) {
 
                 <ButtonWrapper>
                     <PrimaryButton
-                        className="ms-4 text-sm py-3 px-[29px] md:px-[54px] rounded-[30px] md:py-4 md:text-xl md:leading-[20px]"
+                        className="text-sm py-3 px-[29px] md:px-[54px] rounded-[30px] md:py-4 md:text-xl md:leading-[20px] max-sm:justify-center max-sm:w-full"
                         disabled={processing}
                     >
                         Log in

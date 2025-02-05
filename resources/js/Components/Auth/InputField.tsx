@@ -4,6 +4,18 @@ import InputError from "../InputError";
 import { useEffect, useRef, useState } from "react";
 import InputLabel from "../InputLabel";
 
+type props = {
+    id: string;
+    label: string;
+    type: "text" | "password" | "email";
+    error: string;
+    data: array;
+    setData: Function;
+    isPassword: boolean;
+    showPassword: boolean;
+    setShowPassword: Function;
+};
+
 export default function InputField({
     id,
     label,
@@ -14,7 +26,7 @@ export default function InputField({
     isPassword = false,
     showPassword = false,
     setShowPassword = {},
-}) {
+}: props) {
     const [padding, setPadding] = useState(0);
     const labelRef = useRef(null);
 

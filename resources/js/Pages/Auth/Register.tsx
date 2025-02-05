@@ -40,7 +40,7 @@ export default function Register() {
                     <InputField
                         id="email"
                         label="Email: "
-                        type="text"
+                        type="email"
                         error={errors.email}
                         data={data.email}
                         setData={setData}
@@ -48,7 +48,7 @@ export default function Register() {
 
                     <InputField
                         id="password"
-                        label="Password "
+                        label="Password: "
                         type={showPassword ? "text" : "password"}
                         error={errors.password}
                         data={data.password}

@@ -40,7 +40,7 @@ export default function Login({ status }: params) {
                     <InputField
                         id="email"
                         label="Email: "
-                        type="text"
+                        type="email"
                         error={errors.email}
                         data={data.email}
                         setData={setData}
@@ -48,7 +48,7 @@ export default function Login({ status }: params) {
 
                     <InputField
                         id="password"
-                        label="Password "
+                        label="Password: "
                         type={showPassword ? "text" : "password"}
                         error={errors.password}
                         data={data.password}
@@ -72,6 +72,12 @@ export default function Login({ status }: params) {
                         className="text-dark-700 underline transition hover:text-white max-sm:text-sm"
                     >
                         Don’t have an account?
+                    </Link>
+                    <Link
+                        href={route("password.request")}
+                        className="text-dark-700 underline transition hover:text-white max-sm:text-sm"
+                    >
+                        Forgot password?
                     </Link>
                 </ButtonWrapper>
             </form>

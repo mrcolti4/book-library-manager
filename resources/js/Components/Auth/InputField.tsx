@@ -8,12 +8,12 @@ type props = {
     id: string;
     label: string;
     type: "text" | "password" | "email";
-    error: string;
+    error?: string;
     data: array;
     setData: Function;
-    isPassword: boolean;
-    showPassword: boolean;
-    setShowPassword: Function;
+    isPassword?: boolean;
+    showPassword?: boolean;
+    setShowPassword?: Function;
 };
 
 export default function InputField({

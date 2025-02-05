@@ -1,22 +1,24 @@
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
+import InputField from "@/Components/Auth/InputField";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import AuthLayout from "@/Layouts/AuthLayout";
+import GuestLayout from "@/Layouts/GuestLayout";
+import { Head, useForm } from "@inertiajs/react";
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
-        email: '',
+        email: "",
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('password.email'));
+        post(route("password.email"));
     };
 
     return (
-        <GuestLayout>
+        <AuthLayout>
             <Head title="Forgot Password" />
 
             <div className="mb-4 text-sm text-gray-600">
@@ -32,24 +34,24 @@ export default function ForgotPassword({ status }) {
             )}
 
             <form onSubmit={submit}>
-                <TextInput
+                <InputField
                     id="email"
+                    label="Email: "
                     type="email"
-                    name="email"
-                    value={data.email}
-                    className="mt-1 block w-full"
-                    isFocused={true}
-                    onChange={(e) => setData('email', e.target.value)}
+                    error={errors.email}
+                    data={data.email}
+                    setData={setData}
                 />
 
-                <InputError message={errors.email} className="mt-2" />
-
                 <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton
+                        className="text-sm py-3 px-[29px] md:px-[54px] rounded-[30px] md:py-4 md:text-xl md:leading-[20px] max-sm:justify-center max-sm:w-full"
+                        disabled={processing}
+                    >
                         Email Password Reset Link
                     </PrimaryButton>
                 </div>
             </form>
-        </GuestLayout>
+        </AuthLayout>
     );
 }

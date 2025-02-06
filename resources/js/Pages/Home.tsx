@@ -1,24 +1,40 @@
 import InputField from "@/Components/Auth/InputField";
 import AccentWord from "@/Components/Home/AccentWord";
+import Book from "@/Components/Home/Book";
 import Circle from "@/Components/Home/Circle";
 import OutlineButton from "@/Components/OutlineButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import Title from "@/Components/Title";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { BookType } from "@/types/Book";
+import { PaginateData } from "@/types/PaginateData";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Head, Link, useForm } from "@inertiajs/react";
+import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperType } from "swiper/types";
 
-type formState = {
+import "swiper/css";
+import { useState } from "react";
+import SliderButton from "@/Components/Home/SliderButton";
+
+interface formState {
     title: string;
     author: string;
-};
+}
 
-export default function Dashboard() {
+interface props {
+    books: PaginateData<BookType>;
+}
+
+export default function Dashboard({ books }: props) {
     const { data, setData, post, processing, reset } = useForm({
         title: "",
         author: "",
     });
+    const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(
+        null,
+    );
 
     return (
         <AuthenticatedLayout>
@@ -84,7 +100,40 @@ export default function Dashboard() {
                     </div>
                 </SectionWrapper>
                 <SectionWrapper>
-                    <Title>Recommended</Title>
+                    <div className="flex justify-between items-center mb-6">
+                        <Title>Recommended</Title>
+                        <div className="flex gap-2 items-center justify-center">
+                            <SliderButton
+                                onClick={() => swiperInstance?.slidePrev()}
+                            >
+                                <Icon
+                                    icon="material-symbols:chevron-left-rounded"
+                                    width="30"
+                                    height="30"
+                                />
+                            </SliderButton>
+                            <SliderButton
+                                onClick={() => swiperInstance?.slideNext()}
+                            >
+                                <Icon
+                                    icon="material-symbols:chevron-right-rounded"
+                                    width="30"
+                                    height="30"
+                                />
+                            </SliderButton>
+                        </div>
+                    </div>
+                    <Swiper
+                        onSwiper={(swiper) => setSwiperInstance(swiper)}
+                        spaceBetween={21}
+                        slidesPerView={2}
+                    >
+                        {books.data.map((book) => (
+                            <SwiperSlide key={book.id}>
+                                <Book book={book} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </SectionWrapper>
             </div>
         </AuthenticatedLayout>

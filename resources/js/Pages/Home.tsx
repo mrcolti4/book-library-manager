@@ -1,9 +1,10 @@
+import { useState } from "react";
+import SliderButton from "@/Components/Home/SliderButton";
 import InputField from "@/Components/Auth/InputField";
 import AccentWord from "@/Components/Home/AccentWord";
 import Book from "@/Components/Home/Book";
 import Circle from "@/Components/Home/Circle";
 import OutlineButton from "@/Components/OutlineButton";
-import PrimaryButton from "@/Components/PrimaryButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import Title from "@/Components/Title";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -11,30 +12,37 @@ import { BookType } from "@/types/Book";
 import { PaginateData } from "@/types/PaginateData";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper/types";
 
 import "swiper/css";
-import { useState } from "react";
-import SliderButton from "@/Components/Home/SliderButton";
 
-interface formState {
+type FormState = {
     title: string;
     author: string;
-}
+};
 
 interface props {
     books: PaginateData<BookType>;
 }
 
 export default function Dashboard({ books }: props) {
-    const { data, setData, post, processing, reset } = useForm({
+    const { data, setData, post, processing, reset } = useForm<FormState>({
         title: "",
         author: "",
     });
     const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(
         null,
     );
+    const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
+
+    const handlePrevButton = () => {
+        swiperInstance?.slideTo(currentSlideIndex - 2);
+    };
+
+    const handleNextButton = () => {
+        swiperInstance?.slideTo(currentSlideIndex + 2);
+    };
 
     return (
         <AuthenticatedLayout>
@@ -103,18 +111,14 @@ export default function Dashboard({ books }: props) {
                     <div className="flex justify-between items-center mb-6">
                         <Title>Recommended</Title>
                         <div className="flex gap-2 items-center justify-center">
-                            <SliderButton
-                                onClick={() => swiperInstance?.slidePrev()}
-                            >
+                            <SliderButton onClick={handlePrevButton}>
                                 <Icon
                                     icon="material-symbols:chevron-left-rounded"
                                     width="30"
                                     height="30"
                                 />
                             </SliderButton>
-                            <SliderButton
-                                onClick={() => swiperInstance?.slideNext()}
-                            >
+                            <SliderButton onClick={handleNextButton}>
                                 <Icon
                                     icon="material-symbols:chevron-right-rounded"
                                     width="30"
@@ -125,6 +129,9 @@ export default function Dashboard({ books }: props) {
                     </div>
                     <Swiper
                         onSwiper={(swiper) => setSwiperInstance(swiper)}
+                        onSlideChange={(swiper) =>
+                            setCurrentSlideIndex(swiper.activeIndex)
+                        }
                         spaceBetween={21}
                         slidesPerView={2}
                     >

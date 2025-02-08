@@ -16,6 +16,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper/types";
 
 import "swiper/css";
+import Wrapper from "@/Components/Home/Wrapper";
 
 type FormState = {
     title: string;
@@ -48,9 +49,9 @@ export default function Dashboard({ books }: props) {
         <AuthenticatedLayout>
             <Head title="Home" />
 
-            <div className="flex flex-col gap-[10px]">
-                <SectionWrapper className="flex flex-col gap-5">
-                    <form className="flex flex-col gap-2">
+            <div className="flex flex-col gap-[10px] lg:flex-row">
+                <SectionWrapper className="flex flex-col gap-5 md:flex-row lg:flex-col lg:w-1/3">
+                    <form className="flex flex-col gap-2 md:w-1/2 lg:w-auto">
                         <h3 className="text-sm text-white">Filters: </h3>
                         <InputField
                             id="title"
@@ -73,7 +74,7 @@ export default function Dashboard({ books }: props) {
                             To apply
                         </OutlineButton>
                     </form>
-                    <div className="bg-dark-800 p-5 rounded-xl flex flex-col gap-5">
+                    <Wrapper className="flex flex-col gap-5 md:w-1/2 lg:w-auto">
                         <Title>Start your workout</Title>
                         <div className="flex gap-3">
                             <Circle>1</Circle>
@@ -105,9 +106,19 @@ export default function Dashboard({ books }: props) {
                                 color="white"
                             />
                         </Link>
-                    </div>
+                    </Wrapper>
+                    <Wrapper className="hidden lg:flex">
+                        <img
+                            src="/images/home-book.png"
+                            className="w-10 h-10"
+                        />
+                        <p>
+                            "Books are <AccentWord>windows</AccentWord> to the
+                            world, and reading is a journey into the unknown."
+                        </p>
+                    </Wrapper>
                 </SectionWrapper>
-                <SectionWrapper>
+                <SectionWrapper className="lg:w-2/3">
                     <div className="flex justify-between items-center mb-6">
                         <Title>Recommended</Title>
                         <div className="flex gap-2 items-center justify-center">
@@ -132,8 +143,17 @@ export default function Dashboard({ books }: props) {
                         onSlideChange={(swiper) =>
                             setCurrentSlideIndex(swiper.activeIndex)
                         }
-                        spaceBetween={21}
+                        spaceBetween={20}
                         slidesPerView={2}
+                        modules={[Grid]}
+                        breakpoints={{
+                            768: {
+                                slidesPerView: 8,
+                            },
+                            992: {
+                                slidesPerView: 10,
+                            },
+                        }}
                     >
                         {books.data.map((book) => (
                             <SwiperSlide key={book.id}>

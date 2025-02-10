@@ -1,22 +1,29 @@
-import { useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+import { Head, Link, useForm } from "@inertiajs/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Grid } from "swiper/modules";
+import { Icon } from "@iconify/react/dist/iconify.js";
+
 import SliderButton from "@/Components/Home/SliderButton";
 import InputField from "@/Components/Auth/InputField";
+import Wrapper from "@/Components/Home/Wrapper";
 import AccentWord from "@/Components/Home/AccentWord";
 import Book from "@/Components/Home/Book";
 import Circle from "@/Components/Home/Circle";
 import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import Title from "@/Components/Title";
+
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { BookType } from "@/types/Book";
+
+import { BookType } from "@/types/Book/Book";
 import { PaginateData } from "@/types/PaginateData";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { Head, Link, useForm } from "@inertiajs/react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { BookApiResponse } from "@/types/Book/BookApiResponse";
 import { Swiper as SwiperType } from "swiper/types";
 
 import "swiper/css";
-import Wrapper from "@/Components/Home/Wrapper";
+import "swiper/css/grid";
 
 type FormState = {
     title: string;
@@ -43,6 +50,16 @@ export default function Dashboard({ books }: props) {
 
     const handleNextButton = () => {
         swiperInstance?.slideTo(currentSlideIndex + 2);
+        if (
+            false === swiperInstance?.allowSlideNext &&
+            null !== books.next_cursor
+        ) {
+            axios
+                .get(`/api/books/all?cursor=${books.next_cursor}`)
+                .then((data: AxiosResponse<BookApiResponse>) => {
+                    console.log(data.data);
+                });
+        }
     };
 
     return (
@@ -68,7 +85,7 @@ export default function Dashboard({ books }: props) {
                             setData={setData}
                         />
                         <OutlineButton
-                            className="text-sm py-3 px-[29px] md:px-[54px] rounded-[30px] md:py-4 md:text-xl md:leading-[20px] max-sm:justify-center mt-4 max-sm:w-[120px]"
+                            className="text-sm py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[120px]"
                             disabled={processing}
                         >
                             To apply
@@ -144,14 +161,24 @@ export default function Dashboard({ books }: props) {
                             setCurrentSlideIndex(swiper.activeIndex)
                         }
                         spaceBetween={20}
-                        slidesPerView={2}
                         modules={[Grid]}
                         breakpoints={{
-                            768: {
-                                slidesPerView: 8,
+                            0: {
+                                slidesPerView: 2,
                             },
-                            992: {
-                                slidesPerView: 10,
+                            768: {
+                                grid: {
+                                    rows: 2,
+                                    fill: "row",
+                                },
+                                slidesPerView: 4,
+                            },
+                            1024: {
+                                grid: {
+                                    rows: 2,
+                                    fill: "row",
+                                },
+                                slidesPerView: 5,
                             },
                         }}
                     >

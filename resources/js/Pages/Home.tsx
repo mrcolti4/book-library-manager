@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid } from "swiper/modules";
+import { Swiper as SwiperType } from "swiper/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 import SliderButton from "@/Components/Home/SliderButton";
@@ -19,8 +19,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 import { BookType } from "@/types/Book/Book";
 import { PaginateData } from "@/types/PaginateData";
-import { BookApiResponse } from "@/types/Book/BookApiResponse";
-import { Swiper as SwiperType } from "swiper/types";
+import { useAppDispatch } from "@/redux/store";
+import { getAllBooks } from "@/redux/books/actions";
 
 import "swiper/css";
 import "swiper/css/grid";
@@ -43,6 +43,7 @@ export default function Dashboard({ books }: props) {
         null,
     );
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
+    const dispatch = useAppDispatch();
 
     const handlePrevButton = () => {
         swiperInstance?.slideTo(currentSlideIndex - 2);
@@ -54,11 +55,7 @@ export default function Dashboard({ books }: props) {
             false === swiperInstance?.allowSlideNext &&
             null !== books.next_cursor
         ) {
-            axios
-                .get(`/api/books/all?cursor=${books.next_cursor}`)
-                .then((data: AxiosResponse<BookApiResponse>) => {
-                    console.log(data.data);
-                });
+            dispatch(getAllBooks(books.next_cursor));
         }
     };
 

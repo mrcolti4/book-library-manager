@@ -17,8 +17,8 @@ class BooksApiController extends Controller
 
         return response()->json([
             'books' => $books->items(),
-            'next_cursor' => $books->nextCursor()->encode(),
-            'has_more' => $books->hasMorePages()
+            'nextCursor' => $books->nextCursor()->encode(),
+            'hasMore' => $books->hasMorePages()
         ]);
     }
 

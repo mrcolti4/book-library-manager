@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { InitialState } from "./types";
+import { RootInitialState } from "./types";
 import { handleFulfilled, handlePending, handleRejected } from "./handlers";
 
-const initialState: InitialState = {
+const initialState: RootInitialState = {
     isLoading: false,
     errors: [],
-};
+} satisfies RootInitialState as RootInitialState;
 
 const rootSlice = createSlice({
     name: "root",

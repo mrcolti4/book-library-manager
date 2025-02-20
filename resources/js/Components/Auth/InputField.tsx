@@ -9,7 +9,7 @@ type props = {
     label: string;
     type: "text" | "password" | "email";
     error?: string;
-    data: array;
+    data: Array;
     setData: Function;
     isPassword?: boolean;
     showPassword?: boolean;

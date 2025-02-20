@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Cursor;
+use Illuminate\Support\Facades\Log;
 
 class BooksApiController extends Controller
 {
@@ -17,7 +19,7 @@ class BooksApiController extends Controller
 
         return response()->json([
             'books' => $books->items(),
-            'nextCursor' => $books->nextCursor()->encode(),
+            'nextCursor' => $books->hasMorePages() ? $books->nextCursor()->encode(): null,
             'hasMore' => $books->hasMorePages()
         ]);
     }

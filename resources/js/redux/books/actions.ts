@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from "axios";
 
 export const getAllBooks = createAsyncThunk<
     BookApiResponse | undefined,
-    string
+    string | undefined
 >("books/getAllBooks", async (cursor, thunkApi) => {
     try {
         const response: AxiosResponse<BookApiResponse> = await axios.get(

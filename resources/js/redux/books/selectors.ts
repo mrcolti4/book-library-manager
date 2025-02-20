@@ -1,5 +1,5 @@
-import { State } from "./types";
+import { State } from "../types";
 
-export const selectBooks = (state: State) => state.books;
+export const selectBooks = (state: State) => state.bookReducer.books;
 
-export const selectNextCursor = (state: State) => state.nextCursor;
+export const selectNextCursor = (state: State) => state.bookReducer.nextCursor;

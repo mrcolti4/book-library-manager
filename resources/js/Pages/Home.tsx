@@ -1,16 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Grid } from "swiper/modules";
-import { Swiper as SwiperType } from "swiper/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-import SliderButton from "@/Components/Home/SliderButton";
 import InputField from "@/Components/Auth/InputField";
 import Wrapper from "@/Components/Home/Wrapper";
 import AccentWord from "@/Components/Home/AccentWord";
-import Book from "@/Components/Home/Book";
 import Circle from "@/Components/Home/Circle";
+import SliderSection from "@/Components/Home/SliderSection";
 import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import Title from "@/Components/Title";
@@ -20,10 +16,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { BookType } from "@/types/Book/Book";
 import { PaginateData } from "@/types/PaginateData";
 import { useAppDispatch } from "@/redux/store";
-import { getAllBooks } from "@/redux/books/actions";
-
-import "swiper/css";
-import "swiper/css/grid";
+import { setBooks, setNextCursor } from "@/redux/books/slice";
 
 type FormState = {
     title: string;
@@ -31,33 +24,20 @@ type FormState = {
 };
 
 interface props {
-    books: PaginateData<BookType>;
+    initialBooks: PaginateData<BookType>;
 }
 
-export default function Dashboard({ books }: props) {
+export default function Dashboard({ initialBooks }: props) {
+    const dispatch = useAppDispatch();
     const { data, setData, post, processing, reset } = useForm<FormState>({
         title: "",
         author: "",
     });
-    const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(
-        null,
-    );
-    const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
-    const dispatch = useAppDispatch();
 
-    const handlePrevButton = () => {
-        swiperInstance?.slideTo(currentSlideIndex - 2);
-    };
-
-    const handleNextButton = () => {
-        swiperInstance?.slideTo(currentSlideIndex + 2);
-        if (
-            false === swiperInstance?.allowSlideNext &&
-            null !== books.next_cursor
-        ) {
-            dispatch(getAllBooks(books.next_cursor));
-        }
-    };
+    useEffect(() => {
+        dispatch(setNextCursor(initialBooks.next_cursor));
+        dispatch(setBooks(initialBooks.data));
+    }, [dispatch]);
 
     return (
         <AuthenticatedLayout>
@@ -133,58 +113,7 @@ export default function Dashboard({ books }: props) {
                     </Wrapper>
                 </SectionWrapper>
                 <SectionWrapper className="lg:w-2/3">
-                    <div className="flex justify-between items-center mb-6">
-                        <Title>Recommended</Title>
-                        <div className="flex gap-2 items-center justify-center">
-                            <SliderButton onClick={handlePrevButton}>
-                                <Icon
-                                    icon="material-symbols:chevron-left-rounded"
-                                    width="30"
-                                    height="30"
-                                />
-                            </SliderButton>
-                            <SliderButton onClick={handleNextButton}>
-                                <Icon
-                                    icon="material-symbols:chevron-right-rounded"
-                                    width="30"
-                                    height="30"
-                                />
-                            </SliderButton>
-                        </div>
-                    </div>
-                    <Swiper
-                        onSwiper={(swiper) => setSwiperInstance(swiper)}
-                        onSlideChange={(swiper) =>
-                            setCurrentSlideIndex(swiper.activeIndex)
-                        }
-                        spaceBetween={20}
-                        modules={[Grid]}
-                        breakpoints={{
-                            0: {
-                                slidesPerView: 2,
-                            },
-                            768: {
-                                grid: {
-                                    rows: 2,
-                                    fill: "row",
-                                },
-                                slidesPerView: 4,
-                            },
-                            1024: {
-                                grid: {
-                                    rows: 2,
-                                    fill: "row",
-                                },
-                                slidesPerView: 5,
-                            },
-                        }}
-                    >
-                        {books.data.map((book) => (
-                            <SwiperSlide key={book.id}>
-                                <Book book={book} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                    <SliderSection />
                 </SectionWrapper>
             </div>
         </AuthenticatedLayout>

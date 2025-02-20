@@ -14,9 +14,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::cursorPaginate(10);
+        $initialBooks = Book::cursorPaginate(10);
 
-        return Inertia::render('Home', compact('books'));
+        return Inertia::render('Home', compact('initialBooks'));
     }
 
     /**

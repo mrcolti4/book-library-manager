@@ -1,24 +1,23 @@
-import { ForwardedRef, MouseEventHandler, ReactNode, forwardRef } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 
 interface props {
     children: ReactNode;
     onClick: MouseEventHandler;
+    disabled: boolean;
 }
 
-const SliderButton = forwardRef(function (
-    { children, onClick }: props,
-    ref: ForwardedRef<HTMLButtonElement>,
-) {
+export default function PaginationButton({
+    children,
+    onClick,
+    disabled,
+}: props) {
     return (
         <button
             className="border-2 p-1 rounded-full border-dark-800 inline-flex justify-center items-center"
             onClick={onClick}
-            ref={ref}
-            disabled={false}
+            disabled={disabled}
         >
             {children}
         </button>
     );
-});
-
-export default SliderButton;
+}

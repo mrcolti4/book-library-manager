@@ -15,11 +15,13 @@ class BooksApiController extends Controller
     public function index(Request $request)
     {
         $cursor = $request->get('cursor');
-        $books = Book::cursorPaginate(perPage: 10, cursor: $cursor);
+        $perPage = $request->get('perPage');
+        $books = Book::cursorPaginate(perPage: $perPage, cursor: $cursor);
 
         return response()->json([
             'books' => $books->items(),
             'nextCursor' => $books->hasMorePages() ? $books->nextCursor()->encode(): null,
+            'prevCursor' => $books->previousCursor() ? $books->previousCursor()->encode(): null,
             'hasMore' => $books->hasMorePages()
         ]);
     }

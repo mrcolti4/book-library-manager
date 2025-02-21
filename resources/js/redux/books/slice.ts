@@ -1,42 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { BookInitialState } from "./types";
-import { getAllBooks } from "./actions";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { BookType } from "@/types/Book/Book";
+import { getBooksByCursor } from "./actions";
 
 const initialState: BookInitialState = {
     books: [],
     nextCursor: "",
+    prevCursor: "",
     hasMore: false,
 } satisfies BookInitialState as BookInitialState;
 
 const booksSlice = createSlice({
     name: "books",
     initialState,
-    reducers: {
-        setNextCursor: (
-            state: BookInitialState,
-            action: PayloadAction<string>,
-        ) => {
-            state.nextCursor = action.payload;
-        },
-        setBooks: (
-            state: BookInitialState,
-            action: PayloadAction<Array<BookType>>,
-        ) => {
-            state.books.push(...action.payload);
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getAllBooks.fulfilled, (state, action) => {
+        builder.addCase(getBooksByCursor.fulfilled, (state, action) => {
             if (action.payload?.books) {
-                state.books.push(...action.payload.books);
+                state.books = action.payload.books;
             }
-            state.nextCursor = action.payload?.nextCursor;
+            state.nextCursor = action.payload?.nextCursor ?? null;
+            state.prevCursor = action.payload?.prevCursor ?? null;
             state.hasMore = action.payload?.hasMore;
         });
     },
 });
 
-export const { setNextCursor, setBooks } = booksSlice.actions;
 export const bookReducer = booksSlice.reducer;

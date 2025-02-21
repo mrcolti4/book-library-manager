@@ -1,14 +1,20 @@
 import { BookApiResponse } from "@/types/Book/BookApiResponse";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
+import { getBooksByCursorRequest } from "./types";
 
-export const getAllBooks = createAsyncThunk<
+export const getBooksByCursor = createAsyncThunk<
     BookApiResponse | undefined,
-    string | undefined
->("books/getAllBooks", async (cursor, thunkApi) => {
+    getBooksByCursorRequest
+>("books/getBooksByCursor", async (request, thunkApi) => {
     try {
         const response: AxiosResponse<BookApiResponse> = await axios.get(
-            `/api/books/all?cursor=${cursor}`,
+            `/api/books/all?cursor=${request.cursor}`,
+            {
+                params: {
+                    perPage: request.perPage,
+                },
+            },
         );
         return response.data as BookApiResponse;
     } catch (e) {

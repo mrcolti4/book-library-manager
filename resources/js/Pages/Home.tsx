@@ -6,37 +6,32 @@ import InputField from "@/Components/Auth/InputField";
 import Wrapper from "@/Components/Home/Wrapper";
 import AccentWord from "@/Components/Home/AccentWord";
 import Circle from "@/Components/Home/Circle";
-import SliderSection from "@/Components/Home/SliderSection";
+import PaginationSection from "@/Components/Home/PaginationSection";
 import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import Title from "@/Components/Title";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-import { BookType } from "@/types/Book/Book";
-import { PaginateData } from "@/types/PaginateData";
 import { useAppDispatch } from "@/redux/store";
-import { setBooks, setNextCursor } from "@/redux/books/slice";
+import { getBooksByCursor } from "@/redux/books/actions";
+import usePerPage from "@/hooks/usePerPage";
 
 type FormState = {
     title: string;
     author: string;
 };
 
-interface props {
-    initialBooks: PaginateData<BookType>;
-}
-
-export default function Dashboard({ initialBooks }: props) {
+export default function Dashboard() {
     const dispatch = useAppDispatch();
+    const perPage = usePerPage();
     const { data, setData, post, processing, reset } = useForm<FormState>({
         title: "",
         author: "",
     });
 
     useEffect(() => {
-        dispatch(setNextCursor(initialBooks.next_cursor));
-        dispatch(setBooks(initialBooks.data));
+        dispatch(getBooksByCursor({ cursor: "", perPage }));
     }, [dispatch]);
 
     return (
@@ -113,7 +108,7 @@ export default function Dashboard({ initialBooks }: props) {
                     </Wrapper>
                 </SectionWrapper>
                 <SectionWrapper className="lg:w-2/3">
-                    <SliderSection />
+                    <PaginationSection />
                 </SectionWrapper>
             </div>
         </AuthenticatedLayout>

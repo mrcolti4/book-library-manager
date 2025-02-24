@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { BookType } from "@/types/Book/Book";
 import { useModalContext } from "@/hooks/useModalContext";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useEffect } from "react";
+import { MouseEvent, useEffect } from "react";
 
 type props = {
     book: BookType;
@@ -12,6 +12,12 @@ export default function BookModal({ book }: props) {
     const { setCurrentBook } = useModalContext();
     const handleClose = () => {
         setCurrentBook(null);
+    };
+
+    const handleCloseOnBackdrop = (e: MouseEvent<HTMLDivElement>) => {
+        if (e.target === e.currentTarget) {
+            setCurrentBook(null);
+        }
     };
 
     useEffect(() => {
@@ -27,21 +33,23 @@ export default function BookModal({ book }: props) {
 
     return (
         <motion.div
+            id="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="bg-black/70 w-full h-full fixed top-0 left-0 flex items-center justify-center"
+            onClick={handleCloseOnBackdrop}
         >
             <motion.div
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
-                className="text-center flex flex-col items-center justify-center bg-dark-900 w-[500px] h-[480px] relative"
+                className="text-center flex flex-col items-center justify-center bg-dark-900 w-[500px] h-[480px] relative z-10"
             >
                 <button
                     type="button"
                     onClick={handleClose}
-                    className="absolute top-3 right-3"
+                    className="absolute top-3 right-3 pointer transition hover:text-white"
                 >
                     <Icon
                         icon="material-symbols:close-rounded"

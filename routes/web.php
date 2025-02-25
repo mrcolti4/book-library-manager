@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\FavoriteBookController;
 use App\Http\Controllers\ProfileController;
+use App\Models\FavoriteBook;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,5 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('auth')->name('library.')->prefix('library')->group(function () {
+    Route::post('/add', [FavoriteBookController::class, 'store'])->name('store');
+});
 require __DIR__.'/auth.php';
 require __DIR__.'/api.php';

@@ -24,11 +24,8 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
-        "@redux-devtools/extension": "^3.3.0",
-        "@reduxjs/toolkit": "^2.5.1",
         "clsx": "^2.1.1",
         "motion": "^12.4.7",
-        "react-redux": "^9.2.0",
         "typescript": "^5.7.3"
     }
 }

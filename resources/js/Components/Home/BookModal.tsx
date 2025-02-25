@@ -3,6 +3,10 @@ import { BookType } from "@/types/Book/Book";
 import { useModalContext } from "@/hooks/useModalContext";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { MouseEvent, useEffect } from "react";
+import OutlineButton from "../OutlineButton";
+import { AuthenticateUserData } from "@/types";
+import { usePage } from "@inertiajs/react";
+import axios from "axios";
 
 type props = {
     book: BookType;
@@ -10,6 +14,15 @@ type props = {
 
 export default function BookModal({ book }: props) {
     const { setCurrentBook } = useModalContext();
+    const user: AuthenticateUserData = usePage().props?.auth?.user;
+
+    const handleAddBookToLibrary = (e) => {
+        axios.post("/library/add", {
+            user_id: user.id,
+            book_id: book.id,
+        });
+    };
+
     const handleClose = () => {
         setCurrentBook(null);
     };
@@ -64,6 +77,13 @@ export default function BookModal({ book }: props) {
                 />
                 <h3 className="text-white font-bold">{book.title}</h3>
                 <h4 className="text-sm">{book.author}</h4>
+                <OutlineButton
+                    className="text-sm py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4"
+                    disabled={false}
+                    onClick={handleAddBookToLibrary}
+                >
+                    Add to library
+                </OutlineButton>
             </motion.div>
         </motion.div>
     );

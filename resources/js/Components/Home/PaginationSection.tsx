@@ -1,68 +1,73 @@
 import { AnimatePresence } from "motion/react";
-import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { router } from "@inertiajs/react";
 
 import Book from "./Book";
 import Title from "../Title";
 import PaginationButton from "./PaginationButton";
 
-import { getBooksByCursor } from "@/redux/books/actions";
-import { useAppDispatch } from "@/redux/store";
-import {
-    selectBooks,
-    selectNextCursor,
-    selectPrevCursor,
-} from "@/redux/books/selectors";
 import usePerPage from "@/hooks/usePerPage";
+import { BookType } from "@/types/Book/Book";
 
-export default function PaginationSection() {
-    const dispatch = useAppDispatch();
+export default function PaginationSection({
+    books,
+    nextPageUrl,
+    prevPageUrl,
+}: {
+    books: BookType[];
+    nextPageUrl: string;
+    prevPageUrl: string | null;
+}) {
     const perPage = usePerPage();
+    console.log(books);
 
-    const prevCursor = useSelector(selectPrevCursor);
-    const nextCursor = useSelector(selectNextCursor);
-    const books = useSelector(selectBooks);
+    const loadBooks = (link: string) => {
+        router.visit(link, {
+            preserveState: true,
+            preserveScroll: true,
+            only: ["books"],
+        });
+    };
 
-    const handlePrevButton = () => {
-        if (null === prevCursor) return;
-        dispatch(getBooksByCursor({ cursor: prevCursor, perPage }));
+    const handlePrevButton = async () => {
+        if (!prevPageUrl) return;
+        loadBooks(prevPageUrl);
     };
 
     const handleNextButton = async () => {
-        if (null === nextCursor) return;
-        dispatch(getBooksByCursor({ cursor: nextCursor, perPage }));
+        loadBooks(nextPageUrl);
     };
 
     return (
         <>
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center justify-between mb-6">
                 <Title>Recommended</Title>
-                <div className="flex gap-2 items-center justify-center">
+                <div className="flex items-center justify-center gap-2">
                     <PaginationButton
                         onClick={handlePrevButton}
-                        disabled={prevCursor === null}
+                        disabled={false}
                     >
                         <Icon
                             icon="material-symbols:chevron-left-rounded"
                             width="30"
                             height="30"
-                            color={prevCursor !== null ? "white" : "gray"}
+                            color={prevPageUrl !== null ? "white" : "gray"}
                         />
                     </PaginationButton>
                     <PaginationButton
                         onClick={handleNextButton}
-                        disabled={nextCursor === null}
+                        disabled={false}
                     >
                         <Icon
                             icon="material-symbols:chevron-right-rounded"
                             width="30"
                             height="30"
-                            color={nextCursor !== null ? "white" : "gray"}
+                            color={nextPageUrl !== null ? "white" : "gray"}
                         />
                     </PaginationButton>
                 </div>
             </div>
-            <div className="grid grid-cols-2 grid-rows-1 md:grid-cols-4 xl:grid-cols-5 xl:grid-rows-2 gap-5">
+            <div className="grid grid-cols-2 grid-rows-1 gap-5 md:grid-cols-4 xl:grid-cols-5 xl:grid-rows-2">
                 <AnimatePresence mode="wait">
                     {books.map((book) => (
                         <Book key={book.id} book={book} />

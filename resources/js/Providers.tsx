@@ -1,5 +1,3 @@
-import { Provider } from "react-redux";
-import store from "./redux/store";
 import { ReactNode } from "react";
 
 type props = {
@@ -7,5 +5,5 @@ type props = {
 };
 
 export default function Providers({ children }: props) {
-    return <Provider store={store}>{children}</Provider>;
+    return <>{children}</>;
 }

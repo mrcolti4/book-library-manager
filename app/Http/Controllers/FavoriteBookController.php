@@ -12,11 +12,14 @@ class FavoriteBookController extends Controller
     {
         $bookId = $request->get('book_id');
         $userId = $request->get('user_id');
-        $bookInLibrary = FavoriteBook::find($bookId);
+        $bookInLibrary = FavoriteBook::where('book_id', $bookId)
+            ->where('user_id', $userId)
+            ->first();
+
 
         if(null !== $bookInLibrary) {
             //TODO: implement error
-            return;
+            return back()->with('error', 'You already have this book in your library');
         }
 
         FavoriteBook::create([
@@ -24,6 +27,6 @@ class FavoriteBookController extends Controller
             'user_id' => $userId,
         ]);
 
-        return back()->with('success', true);
+        return to_route('home')->with('success', 'You add book to your library!');
     }
 }

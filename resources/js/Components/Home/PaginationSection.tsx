@@ -19,7 +19,6 @@ export default function PaginationSection({
     prevPageUrl: string | null;
 }) {
     const perPage = usePerPage();
-    console.log(books);
 
     const loadBooks = (link: string) => {
         router.visit(link, {

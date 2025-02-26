@@ -5,19 +5,25 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { AuthenticateUserData } from "@/types";
 import { BookType } from "@/types/Book/Book";
+import { Library } from "@/types/Library/Library";
 import ModalContextProps from "@/types/ModalContext";
 import { Link, usePage } from "@inertiajs/react";
 import { AnimatePresence } from "motion/react";
 import React, { createContext, ReactElement, useState } from "react";
 
 type props = {
+    userLibrary: Library[];
     header?: ReactElement;
     children: React.ReactNode;
 };
 
 export const ModalContext = createContext<ModalContextProps | null>(null);
 
-export default function AuthenticatedLayout({ header, children }: props) {
+export default function AuthenticatedLayout({
+    userLibrary,
+    header,
+    children,
+}: props) {
     const [book, setCurrentBook] = useState<BookType | null>(null);
     const user: AuthenticateUserData = usePage().props?.auth?.user;
 
@@ -25,12 +31,12 @@ export default function AuthenticatedLayout({ header, children }: props) {
         useState(false);
 
     return (
-        <ModalContext.Provider value={{ book, setCurrentBook }}>
-            <div className="min-h-screen bg-dark-950 p-8 relative">
-                <nav className="bg-dark-800 rounded-xl mb-4">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="flex h-20 justify-between">
-                            <div className="flex shrink-0 items-center">
+        <ModalContext.Provider value={{ book, setCurrentBook, userLibrary }}>
+            <div className="relative min-h-screen p-8 bg-dark-950">
+                <nav className="mb-4 bg-dark-800 rounded-xl">
+                    <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                        <div className="flex justify-between h-20">
+                            <div className="flex items-center shrink-0">
                                 <Link href="/">
                                     <ApplicationLogo />
                                 </Link>
@@ -59,7 +65,7 @@ export default function AuthenticatedLayout({ header, children }: props) {
                                             <span className="inline-flex rounded-md">
                                                 <button
                                                     type="button"
-                                                    className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                                                    className="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none"
                                                 >
                                                     {user.name}
 
@@ -97,17 +103,17 @@ export default function AuthenticatedLayout({ header, children }: props) {
                                 </div>
                             </div>
 
-                            <div className="-me-2 flex items-center sm:hidden">
+                            <div className="flex items-center -me-2 sm:hidden">
                                 <button
                                     onClick={() =>
                                         setShowingNavigationDropdown(
-                                            (previousState) => !previousState,
+                                            (previousState) => !previousState
                                         )
                                     }
-                                    className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
+                                    className="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
                                 >
                                     <svg
-                                        className="h-6 w-6"
+                                        className="w-6 h-6"
                                         stroke="currentColor"
                                         fill="none"
                                         viewBox="0 0 24 24"
@@ -146,7 +152,7 @@ export default function AuthenticatedLayout({ header, children }: props) {
                             " sm:hidden"
                         }
                     >
-                        <div className="space-y-1 pb-3 pt-2">
+                        <div className="pt-2 pb-3 space-y-1">
                             <ResponsiveNavLink
                                 href={route("home")}
                                 active={route().current("home")}
@@ -155,7 +161,7 @@ export default function AuthenticatedLayout({ header, children }: props) {
                             </ResponsiveNavLink>
                         </div>
 
-                        <div className="border-t border-gray-200 pb-1 pt-4">
+                        <div className="pt-4 pb-1 border-t border-gray-200">
                             <div className="px-4">
                                 <div className="text-base font-medium text-gray-800">
                                     {user.name}
@@ -183,7 +189,7 @@ export default function AuthenticatedLayout({ header, children }: props) {
 
                 {header && (
                     <header className="bg-white shadow">
-                        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                        <div className="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                             {header}
                         </div>
                     </header>

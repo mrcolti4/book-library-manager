@@ -22,7 +22,7 @@ export default function Book({ book }: props) {
             transition={{
                 duration: 0.3,
             }}
-            className="text-center flex flex-col items-center justify-center"
+            className="flex flex-col items-center justify-center text-center"
         >
             <img
                 src={book.poster}
@@ -32,7 +32,7 @@ export default function Book({ book }: props) {
             <button
                 onClick={handleClick}
                 type="button"
-                className="text-white font-bold"
+                className="font-bold text-white"
             >
                 {book.title}
             </button>

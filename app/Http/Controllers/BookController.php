@@ -6,6 +6,8 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
+use App\Models\FavoriteBook;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BookController extends Controller
@@ -18,7 +20,8 @@ class BookController extends Controller
         $books = Book::cursorPaginate(10);
 
         return Inertia::render('Home', [
-            'books' => BookResource::collection($books)
+            'books' => BookResource::collection($books),
+            'library' => FavoriteBook::where('user_id', Auth::id())->get(),
         ]);
     }
 

@@ -16,13 +16,20 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import usePerPage from "@/hooks/usePerPage";
 import { PaginateData } from "@/types/PaginateData";
 import { BookType } from "@/types/Book/Book";
+import { Library } from "@/types/Library/Library";
 
 type FormState = {
     title: string;
     author: string;
 };
 
-export default function Home({ books }: { books: PaginateData<BookType> }) {
+export default function Home({
+    books,
+    library,
+}: {
+    books: PaginateData<BookType>;
+    library: Library[];
+}) {
     const perPage = usePerPage();
     const { data, setData, post, processing, reset } = useForm<FormState>({
         title: "",
@@ -30,7 +37,7 @@ export default function Home({ books }: { books: PaginateData<BookType> }) {
     });
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout userLibrary={library}>
             <Head title="Home" />
 
             <div className="flex flex-col gap-[10px] lg:flex-row">

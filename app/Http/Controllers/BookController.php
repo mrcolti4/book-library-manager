@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Resources\BookResource;
 use App\Models\Book;
 use Inertia\Inertia;
 
@@ -16,7 +17,9 @@ class BookController extends Controller
     {
         $books = Book::cursorPaginate(10);
 
-        return Inertia::render('Home', compact('books'));
+        return Inertia::render('Home', [
+            'books' => BookResource::collection($books)
+        ]);
     }
 
     /**

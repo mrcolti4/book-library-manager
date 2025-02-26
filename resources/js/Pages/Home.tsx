@@ -113,8 +113,8 @@ export default function Home({ books }: { books: PaginateData<BookType> }) {
                 <SectionWrapper className="lg:w-2/3">
                     <PaginationSection
                         books={books.data}
-                        nextPageUrl={books.next_page_url}
-                        prevPageUrl={books.prev_page_url}
+                        nextPageUrl={books.links.next}
+                        prevPageUrl={books.links.prev}
                     />
                 </SectionWrapper>
             </div>

@@ -13,6 +13,6 @@ class Book extends Model
 
     public function library(): HasMany
     {
-        $this->hasMany(Book::class);
+        return $this->hasMany(Book::class);
     }
 }

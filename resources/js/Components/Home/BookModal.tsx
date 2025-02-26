@@ -63,14 +63,14 @@ export default function BookModal({ book }: props) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black/70"
+            className="fixed top-0 left-0 z-10 flex items-center justify-center w-full h-full bg-black/70"
             onClick={handleCloseOnBackdrop}
         >
             <motion.div
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
-                className="text-center flex flex-col items-center justify-center bg-dark-900 w-[500px] h-[480px] relative z-10"
+                className="text-center flex flex-col items-center justify-center bg-dark-900 w-[500px] h-[480px] relative z-20"
             >
                 <button
                     type="button"

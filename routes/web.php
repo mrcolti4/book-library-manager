@@ -26,7 +26,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->name('library.')->prefix('library')->group(function () {
+    Route::get('/', [FavoriteBookController::class, 'index'])->name('index');
     Route::post('/add', [FavoriteBookController::class, 'store'])->name('store');
+    Route::post('/filter', [FavoriteBookController::class, 'filterBooks'])->name('filter');
 });
+
+
 require __DIR__.'/auth.php';
 require __DIR__.'/api.php';

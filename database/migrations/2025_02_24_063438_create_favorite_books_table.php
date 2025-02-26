@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\BookReadingStatus;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Book::class);
+            $table->string('status')->default(BookReadingStatus::UNREAD->value);
             $table->timestamps();
         });
     }

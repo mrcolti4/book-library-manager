@@ -32,7 +32,7 @@ export default function AuthenticatedLayout({
 
     return (
         <ModalContext.Provider value={{ book, setCurrentBook, userLibrary }}>
-            <div className="relative min-h-screen p-8 bg-dark-950">
+            <div className="relative flex flex-col min-h-screen p-8 bg-dark-950">
                 <nav className="mb-4 bg-dark-800 rounded-xl">
                     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <div className="flex justify-between h-20">
@@ -50,8 +50,10 @@ export default function AuthenticatedLayout({
                                         Home
                                     </NavLink>
                                     <NavLink
-                                        href={route("profile.edit")}
-                                        active={route().current("profile.edit")}
+                                        href={route("library.index")}
+                                        active={route().current(
+                                            "library.index"
+                                        )}
                                     >
                                         My library
                                     </NavLink>
@@ -195,7 +197,7 @@ export default function AuthenticatedLayout({
                     </header>
                 )}
 
-                <main>{children}</main>
+                <main className="h-full min-h-full grow">{children}</main>
                 <AnimatePresence>
                     {book && <BookModal book={book} />}
                 </AnimatePresence>

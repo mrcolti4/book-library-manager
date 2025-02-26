@@ -10,8 +10,8 @@ import {
 type Props = {
     id?: string;
     name?: string;
-    value?: string;
-    type: "text" | "password" | "email";
+    value?: string | number;
+    type: "text" | "password" | "email" | "number";
     error?: string;
     className: string;
     autoComplete?: string;
@@ -27,7 +27,7 @@ type InputHandler = {
 
 export default forwardRef<InputHandler, Props>(function TextInput(
     { type = "text", className = "", isFocused = false, error = "", ...props },
-    ref,
+    ref
 ) {
     const localRef = useRef<HTMLInputElement | null>(null);
     const classes = clsx(
@@ -36,7 +36,7 @@ export default forwardRef<InputHandler, Props>(function TextInput(
         className,
         {
             "border border-red focus:border-red focus:ring-red": error !== "",
-        },
+        }
     );
 
     useImperativeHandle(ref, () => ({

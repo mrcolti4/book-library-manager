@@ -5,16 +5,20 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { MouseEvent, useEffect } from "react";
 import OutlineButton from "../OutlineButton";
 import { AuthenticateUserData } from "@/types";
-import { usePage } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import ModalLayout from "../Common/ModalLayout";
 
 type props = {
     book: BookType;
+    libraryId: number;
 };
 
-export default function LibraryModal({ book }: props) {
+export default function LibraryModal({ book, libraryId }: props) {
     const { setModal } = useModalContext();
     const user: AuthenticateUserData = usePage().props?.auth?.user;
+    const handleStartReading = () => {
+        router.visit(route("library.show", libraryId));
+    };
 
     return (
         <ModalLayout>
@@ -29,6 +33,7 @@ export default function LibraryModal({ book }: props) {
             <OutlineButton
                 className="py-3 mt-4 rounded-3xl px-7"
                 disabled={false}
+                onClick={handleStartReading}
             >
                 Start reading
             </OutlineButton>

@@ -20,7 +20,7 @@ export default function LibraryBook({ book, id }: props) {
     };
 
     const handleClick = () => {
-        setModal(<LibraryModal book={book} />);
+        setModal(<LibraryModal book={book} libraryId={id} />);
     };
 
     return (

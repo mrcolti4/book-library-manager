@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FavoriteBook extends Model
 {
@@ -19,5 +20,10 @@ class FavoriteBook extends Model
     public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
+    }
+
+    public function records(): HasMany
+    {
+        return $this->hasMany(ReadingRecord::class);
     }
 }

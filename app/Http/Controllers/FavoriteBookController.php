@@ -26,6 +26,15 @@ class FavoriteBookController extends Controller
         ]);
     }
 
+    public function show(Request $request, FavoriteBook $favoriteBook) 
+    {
+        return Inertia::render('Library/Show', [
+            'book' => $favoriteBook->book,
+            'favoriteBook' => $favoriteBook,
+            'records' => $favoriteBook->records
+        ]);
+    }
+
     public function store(Request $request, User $user)
     {
         $bookId = $request->get('book_id');

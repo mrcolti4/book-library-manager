@@ -12,7 +12,7 @@ import { AnimatePresence } from "motion/react";
 import React, { createContext, ReactElement, ReactNode, useState } from "react";
 
 type props = {
-    userLibrary: Library[];
+    userLibrary?: Library[];
     header?: ReactElement;
     children: React.ReactNode;
 };
@@ -31,7 +31,9 @@ export default function AuthenticatedLayout({
         useState(false);
 
     return (
-        <ModalContext.Provider value={{ modal, setModal, data: userLibrary }}>
+        <ModalContext.Provider
+            value={{ modal, setModal, data: userLibrary ?? [] }}
+        >
             <div className="relative flex flex-col min-h-screen p-8 bg-dark-950">
                 <nav className="mb-4 bg-dark-800 rounded-xl">
                     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">

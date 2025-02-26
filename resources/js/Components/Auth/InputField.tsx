@@ -7,9 +7,9 @@ import InputLabel from "../InputLabel";
 type Props = {
     id: string;
     label: string;
-    type: "text" | "password" | "email";
+    type: "text" | "password" | "email" | "number";
     error?: string;
-    data: string;
+    data: string | number;
     setData: Function;
     isFocused?: boolean;
     children?: ReactNode;
@@ -39,7 +39,7 @@ export default function InputField({
         <div>
             <div className="relative">
                 <InputLabel
-                    className="absolute left-3 text-dark-700 top-1/2 -translate-y-1/2"
+                    className="absolute -translate-y-1/2 left-3 text-dark-700 top-1/2"
                     value={label}
                     ref={labelRef}
                 />
@@ -49,7 +49,7 @@ export default function InputField({
                     value={data}
                     type={type}
                     error={error}
-                    className="mt-1 block w-full"
+                    className="block w-full mt-1"
                     autoComplete={id}
                     isFocused={isFocused}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -60,7 +60,7 @@ export default function InputField({
                         paddingLeft: `${padding}px`,
                     }}
                 />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-3 items-center justify-center">
+                <div className="absolute flex items-center justify-center gap-3 -translate-y-1/2 right-3 top-1/2">
                     {children}
                     {error && (
                         <Icon

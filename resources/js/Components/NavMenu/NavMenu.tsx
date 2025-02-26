@@ -1,3 +1,9 @@
+import { Link } from "@inertiajs/react";
+import ApplicationLogo from "../ApplicationLogo";
+import NavLink from "../NavLink";
+import ResponsiveNavLink from "../ResponsiveNavLink";
+import Dropdown from "../Dropdown";
+
 export default function NavMenu() {
     return (
         <nav className="border-b border-gray-100 bg-white">
@@ -6,7 +12,7 @@ export default function NavMenu() {
                     <div className="flex">
                         <div className="flex shrink-0 items-center">
                             <Link href="/">
-                                <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                <ApplicationLogo />
                             </Link>
                         </div>
 

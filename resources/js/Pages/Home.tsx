@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 
 import InputField from "@/Components/Auth/InputField";
 import Wrapper from "@/Components/Home/Wrapper";
@@ -36,36 +35,37 @@ export default function Home({ books }: { books: PaginateData<BookType> }) {
 
             <div className="flex flex-col gap-[10px] lg:flex-row">
                 <SectionWrapper className="flex flex-col gap-5 md:flex-row lg:flex-col lg:w-1/3">
-                    <AnimatePresence>
-                        <motion.form
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            className="flex flex-col gap-2 md:w-1/2 lg:w-auto"
+                    <motion.form
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{
+                            duration: 0.3,
+                        }}
+                        className="flex flex-col gap-2 md:w-1/2 lg:w-auto"
+                    >
+                        <h3 className="text-sm text-white">Filters: </h3>
+                        <InputField
+                            id="title"
+                            type="text"
+                            label="Book title: "
+                            data={data.title}
+                            setData={setData}
+                        />
+                        <InputField
+                            id="author"
+                            type="text"
+                            label="The author: "
+                            data={data.author}
+                            setData={setData}
+                        />
+                        <OutlineButton
+                            className="text-sm py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[120px] capitalize"
+                            disabled={processing}
                         >
-                            <h3 className="text-sm text-white">Filters: </h3>
-                            <InputField
-                                id="title"
-                                type="text"
-                                label="Book title: "
-                                data={data.title}
-                                setData={setData}
-                            />
-                            <InputField
-                                id="author"
-                                type="text"
-                                label="The author: "
-                                data={data.author}
-                                setData={setData}
-                            />
-                            <OutlineButton
-                                className="text-sm py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[120px] capitalize"
-                                disabled={processing}
-                            >
-                                To apply
-                            </OutlineButton>
-                        </motion.form>
-                    </AnimatePresence>
+                            To apply
+                        </OutlineButton>
+                    </motion.form>
                     <Wrapper className="flex flex-col gap-5 md:w-1/2 lg:w-auto">
                         <Title>Start your workout</Title>
                         <div className="flex gap-3">

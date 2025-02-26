@@ -1,5 +1,4 @@
 import React, { MouseEventHandler } from "react";
-import PrimaryButton from "./PrimaryButton";
 
 type props = {
     children: React.ReactNode;

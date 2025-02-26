@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->name('library.')->prefix('library')->group(function () {
     Route::get('/', [FavoriteBookController::class, 'index'])->name('index');
     Route::post('/add', [FavoriteBookController::class, 'store'])->name('store');
-    Route::post('/filter', [FavoriteBookController::class, 'filterBooks'])->name('filter');
+    Route::delete('/{book}/destroy', [FavoriteBookController::class, 'destroy'])->name('destroy');
 });
 
 

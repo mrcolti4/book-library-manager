@@ -37,8 +37,8 @@ export default function Index({ library }: { library: BookInLibrary[] }) {
     };
 
     const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        router.post(
-            "/library/filter",
+        router.get(
+            "/library",
             {
                 filter: e.target.value,
             },
@@ -90,38 +90,38 @@ export default function Index({ library }: { library: BookInLibrary[] }) {
                     <div className="flex items-center justify-between mb-10">
                         <Title>My Library</Title>
 
-                        {library.length > 0 && (
-                            <div className="flex gap-4">
-                                <select onChange={handleSelectChange}>
-                                    <option value="unread">Unread</option>
-                                    <option value="in_progress">
-                                        In progress
-                                    </option>
-                                    <option value="done">Done</option>
-                                    <option value="all_books">All books</option>
-                                </select>
-                                <PaginationButton
-                                    onClick={handlePrevButton}
-                                    disabled={false}
-                                >
-                                    <Icon
-                                        icon="material-symbols:chevron-left-rounded"
-                                        width="30"
-                                        height="30"
-                                    />
-                                </PaginationButton>
-                                <PaginationButton
-                                    onClick={handleNextButton}
-                                    disabled={false}
-                                >
-                                    <Icon
-                                        icon="material-symbols:chevron-right-rounded"
-                                        width="30"
-                                        height="30"
-                                    />
-                                </PaginationButton>
-                            </div>
-                        )}
+                        <div className="flex gap-4">
+                            <select onChange={handleSelectChange}>
+                                <option value="unread">Unread</option>
+                                <option value="in_progress">In progress</option>
+                                <option value="done">Done</option>
+                                <option value="all_books">All books</option>
+                            </select>
+                            {library.length > 0 && (
+                                <>
+                                    <PaginationButton
+                                        onClick={handlePrevButton}
+                                        disabled={false}
+                                    >
+                                        <Icon
+                                            icon="material-symbols:chevron-left-rounded"
+                                            width="30"
+                                            height="30"
+                                        />
+                                    </PaginationButton>
+                                    <PaginationButton
+                                        onClick={handleNextButton}
+                                        disabled={false}
+                                    >
+                                        <Icon
+                                            icon="material-symbols:chevron-right-rounded"
+                                            width="30"
+                                            height="30"
+                                        />
+                                    </PaginationButton>
+                                </>
+                            )}
+                        </div>
                     </div>
                     {library.length > 0 ? (
                         <LibrarySlider

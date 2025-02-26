@@ -9,7 +9,7 @@ import { Library } from "@/types/Library/Library";
 import ModalContextProps from "@/types/ModalContext";
 import { Link, usePage } from "@inertiajs/react";
 import { AnimatePresence } from "motion/react";
-import React, { createContext, ReactElement, useState } from "react";
+import React, { createContext, ReactElement, ReactNode, useState } from "react";
 
 type props = {
     userLibrary: Library[];
@@ -24,14 +24,14 @@ export default function AuthenticatedLayout({
     header,
     children,
 }: props) {
-    const [book, setCurrentBook] = useState<BookType | null>(null);
+    const [modal, setModal] = useState<ReactNode | null>(null);
     const user: AuthenticateUserData = usePage().props?.auth?.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
     return (
-        <ModalContext.Provider value={{ book, setCurrentBook, userLibrary }}>
+        <ModalContext.Provider value={{ modal, setModal, data: userLibrary }}>
             <div className="relative flex flex-col min-h-screen p-8 bg-dark-950">
                 <nav className="mb-4 bg-dark-800 rounded-xl">
                     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -198,9 +198,7 @@ export default function AuthenticatedLayout({
                 )}
 
                 <main className="h-full min-h-full grow">{children}</main>
-                <AnimatePresence>
-                    {book && <BookModal book={book} />}
-                </AnimatePresence>
+                <AnimatePresence>{modal}</AnimatePresence>
             </div>
         </ModalContext.Provider>
     );

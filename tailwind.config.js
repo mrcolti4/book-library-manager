@@ -28,6 +28,7 @@ export default {
                     950: "#141414", // near black
                 },
                 red: "#E90516",
+                semired: "#E85050",
             },
             opacity: {
                 30: "30",

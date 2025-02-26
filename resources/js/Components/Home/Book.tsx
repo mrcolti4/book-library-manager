@@ -2,16 +2,17 @@ import { motion } from "motion/react";
 
 import { BookType } from "@/types/Book/Book";
 import { useModalContext } from "@/hooks/useModalContext";
+import BookModal from "./BookModal";
 
 type props = {
     book: BookType;
 };
 
 export default function Book({ book }: props) {
-    const { setCurrentBook } = useModalContext();
+    const { setModal } = useModalContext();
 
     const handleClick = () => {
-        setCurrentBook(book);
+        setModal(<BookModal book={book} />);
     };
 
     return (

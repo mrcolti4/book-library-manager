@@ -10,12 +10,17 @@ use Inertia\Inertia;
 
 class FavoriteBookController extends Controller
 {
-    public function index() 
+    public function index(Request $request) 
     {
-        $library = FavoriteBook::where('user_id', Auth::id())
-            ->with('book')
-            ->get();
+        $filter = $request->get('filter', 'all_books');
+        $query = FavoriteBook::where('user_id', Auth::id())->with('book');
 
+        if ('all_books' !== $filter) {
+            $query->where('status', $filter);
+        }
+
+        $library = $query->get();
+        
         return Inertia::render('Library/Index', [
             'library' => $library
         ]);
@@ -41,6 +46,13 @@ class FavoriteBookController extends Controller
         ]);
 
         return to_route('home')->with('success', 'You add book to your library!');
+    }
+
+    public function destroy(Request $request, FavoriteBook $book) 
+    {
+        $book->delete();
+
+        return back()->with('success', 'You remove book from your library!');
     }
 
     public function filterBooks(Request $request)

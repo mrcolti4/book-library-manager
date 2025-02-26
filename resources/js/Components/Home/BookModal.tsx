@@ -12,12 +12,10 @@ type props = {
 };
 
 export default function BookModal({ book }: props) {
-    const { setCurrentBook, userLibrary } = useModalContext();
+    const { setModal, data } = useModalContext();
     const user: AuthenticateUserData = usePage().props?.auth?.user;
 
-    const bookInLibrary = userLibrary.find(
-        (library) => library.book_id === book.id
-    );
+    const bookInLibrary = data.find((library) => library.book_id === book.id);
 
     const handleAddBookToLibrary = () => {
         if (bookInLibrary) return;
@@ -30,26 +28,26 @@ export default function BookModal({ book }: props) {
             },
             {
                 onSuccess: () => {
-                    setCurrentBook(null);
+                    setModal(null);
                 },
             }
         );
     };
 
     const handleClose = () => {
-        setCurrentBook(null);
+        setModal(null);
     };
 
     const handleCloseOnBackdrop = (e: MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
-            setCurrentBook(null);
+            setModal(null);
         }
     };
 
     useEffect(() => {
         const handleEscClose = (e: globalThis.KeyboardEvent) => {
             if (e.key === "Escape") {
-                setCurrentBook(null);
+                setModal(null);
             }
         };
 

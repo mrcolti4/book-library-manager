@@ -1,5 +1,6 @@
 import { useModalContext } from "@/hooks/useModalContext";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import clsx from "clsx";
 import { motion } from "motion/react";
 import { MouseEvent, ReactNode, useEffect } from "react";
 
@@ -9,12 +10,11 @@ type Props = {
     height?: number;
     width?: number;
 };
-export default function ModalLayout({
-    children,
-    className,
-    height = 500,
-    width = 480,
-}: Props) {
+export default function ModalLayout({ children, className }: Props) {
+    const classes = clsx(
+        "text-center flex flex-col items-center justify-center bg-dark-900 relative z-20 rounded-3xl",
+        className
+    );
     const { setModal } = useModalContext();
 
     const handleClose = () => {
@@ -51,7 +51,7 @@ export default function ModalLayout({
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
-                className={`text-center flex flex-col items-center justify-center bg-dark-900 w-[${width}px] h-[${height}px] relative z-20 ${className}`}
+                className={classes}
             >
                 <button
                     type="button"

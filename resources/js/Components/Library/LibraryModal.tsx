@@ -21,7 +21,7 @@ export default function LibraryModal({ book, libraryId }: props) {
     };
 
     return (
-        <ModalLayout>
+        <ModalLayout className="w-[480px] h-[500px]">
             <img
                 src={book.poster}
                 alt={book.title}

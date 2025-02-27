@@ -9,6 +9,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 import { BookInLibrary } from "@/types/Library/Library";
 import { BookType } from "@/types/Book/Book";
+import { AnimatePresence } from "motion/react";
 
 type ReadingStatus = "start" | "reading" | "stop";
 
@@ -92,7 +93,7 @@ export default function Show({
         <AuthenticatedLayout>
             <div className="flex flex-col gap-[10px] lg:flex-row min-h-full grow h-full">
                 <SectionWrapper className="flex flex-col h-full gap-5 md:flex-row lg:flex-col lg:w-1/3 grow">
-                    {section}
+                    <AnimatePresence>{section}</AnimatePresence>
                 </SectionWrapper>
                 <SectionWrapper className="h-full p-4 lg:w-2/3 grow">
                     <img src={book.poster} />

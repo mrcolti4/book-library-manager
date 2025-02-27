@@ -1,9 +1,15 @@
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import InputField from "../Auth/InputField";
 import OutlineButton from "../OutlineButton";
 import Title from "../Title";
 import { StopRecordSectionProps } from "@/types/Library/Record";
 import DiaryItem from "./DiaryItem";
+import DiaryBlock from "./DiaryBlock";
+import { useState } from "react";
+import StatisticBlock from "./StatisticBlock";
+import { Icon } from "@iconify/react/dist/iconify.js";
+
+type Blocks = "diary" | "statistics";
 
 export function StopReadingSection({
     id,
@@ -14,6 +20,8 @@ export function StopReadingSection({
     processing,
     onClick,
 }: StopRecordSectionProps) {
+    const [activeBlock, setActiveBlock] = useState<Blocks>("diary");
+
     return (
         <>
             <motion.form
@@ -41,21 +49,44 @@ export function StopReadingSection({
                     To stop
                 </OutlineButton>
             </motion.form>
-            <Title>Diary</Title>
-            <div className="p-5 space-y-4 bg-dark-800 rounded-xl">
-                {records.length > 0 ? (
-                    records.map((record) => (
-                        <DiaryItem
-                            key={record.id}
-                            record={record}
-                            activeId={records[0].id}
-                            bookPagesCount={book.pages}
+            <div className="flex items-center justify-between">
+                <Title>Diary</Title>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => setActiveBlock("diary")}
+                        className={"text-sm font-bold text-white "}
+                    >
+                        <Icon
+                            icon="material-symbols:hourglass-empty-rounded"
+                            fontSize={20}
+                            color={activeBlock === "diary" ? "white" : "gray"}
                         />
-                    ))
-                ) : (
-                    <p className="text-sm text-white">No records</p>
-                )}
+                    </button>
+                    <button
+                        onClick={() => setActiveBlock("statistics")}
+                        className={"text-sm font-bold text-white "}
+                    >
+                        <Icon
+                            icon="material-symbols:pie-chart-outline"
+                            fontSize={20}
+                            color={
+                                activeBlock === "statistics" ? "white" : "gray"
+                            }
+                        />
+                    </button>
+                </div>
             </div>
+            <AnimatePresence>
+                {activeBlock === "diary" && (
+                    <DiaryBlock records={records} pages={book.pages} />
+                )}
+                {activeBlock === "statistics" && (
+                    <StatisticBlock
+                        bookPages={book.pages}
+                        readPages={records[0].page_count}
+                    />
+                )}
+            </AnimatePresence>
         </>
     );
 }

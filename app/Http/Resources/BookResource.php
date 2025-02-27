@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookResource extends JsonResource
 {
-    // protected $wrap = false;
     /**
      * Transform the resource into an array.
      *

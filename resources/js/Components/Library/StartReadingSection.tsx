@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import InputField from "../Auth/InputField";
 import OutlineButton from "../OutlineButton";
 import Title from "../Title";
-import { StartRecordSectionsProps } from "@/types/Library/StartRecord";
+import { StartRecordSectionsProps } from "@/types/Library/Record";
 
 export function StartReadingSection({
     id,

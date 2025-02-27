@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReadingRecordResource;
 use App\Models\FavoriteBook;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class FavoriteBookController extends Controller
         return Inertia::render('Library/Show', [
             'book' => $favoriteBook->book,
             'favoriteBook' => $favoriteBook,
-            'records' => $favoriteBook->records
+            'records' => ReadingRecordResource::collection($favoriteBook->records)->collection
         ]);
     }
 

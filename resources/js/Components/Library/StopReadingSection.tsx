@@ -2,16 +2,20 @@ import { motion } from "motion/react";
 import InputField from "../Auth/InputField";
 import OutlineButton from "../OutlineButton";
 import Title from "../Title";
-import { StopRecordSectionProps } from "@/types/Library/StartRecord";
+import { StopRecordSectionProps } from "@/types/Library/Record";
+import DiaryItem from "./DiaryItem";
 
 export function StopReadingSection({
     id,
     records,
+    book,
     data,
     setData,
     processing,
     onClick,
 }: StopRecordSectionProps) {
+    console.log(records);
+
     return (
         <>
             <motion.form
@@ -40,13 +44,14 @@ export function StopReadingSection({
                 </OutlineButton>
             </motion.form>
             <Title>Diary</Title>
-            <div>
+            <div className="p-5 space-y-4 bg-dark-800 rounded-xl">
                 {records.length > 0 ? (
                     records.map((record) => (
-                        <div key={record.id}>
-                            <p className="text-sm text-white">Date: </p>
-                            <p className="text-sm text-white">Page: </p>
-                        </div>
+                        <DiaryItem
+                            key={record.id}
+                            record={record}
+                            bookPagesCount={book.pages}
+                        />
                     ))
                 ) : (
                     <p className="text-sm text-white">No records</p>

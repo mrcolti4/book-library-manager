@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReadingRecordRequest;
-use App\Models\FavoriteBook;
 use App\Models\ReadingRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

@@ -51,6 +51,7 @@ export default function Show({
                 <StopReadingSection
                     id="stop_page"
                     records={records}
+                    book={book}
                     data={data.stop_page}
                     setData={setData}
                     processing={processing}

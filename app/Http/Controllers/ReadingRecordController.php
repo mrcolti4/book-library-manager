@@ -18,4 +18,11 @@ class ReadingRecordController extends Controller
 
         return to_route('library.show', ['favoriteBook' => $data['favorite_book_id']])->with('success', 'You finished reading this book!');
     }
+
+    public function destroy(ReadingRecord $record)
+    {
+        $record->delete();
+
+        return back();
+    }
 }

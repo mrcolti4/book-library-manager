@@ -32,7 +32,12 @@ class FavoriteBookController extends Controller
         return Inertia::render('Library/Show', [
             'book' => $favoriteBook->book,
             'favoriteBook' => $favoriteBook,
-            'records' => ReadingRecordResource::collection($favoriteBook->records)->collection
+            'records' => ReadingRecordResource::collection(
+                $favoriteBook
+                    ->records()
+                    ->latest()
+                    ->get()
+            )->collection
         ]);
     }
 

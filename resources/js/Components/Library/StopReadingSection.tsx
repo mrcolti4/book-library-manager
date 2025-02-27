@@ -14,8 +14,6 @@ export function StopReadingSection({
     processing,
     onClick,
 }: StopRecordSectionProps) {
-    console.log(records);
-
     return (
         <>
             <motion.form
@@ -50,6 +48,7 @@ export function StopReadingSection({
                         <DiaryItem
                             key={record.id}
                             record={record}
+                            activeId={records[0].id}
                             bookPagesCount={book.pages}
                         />
                     ))

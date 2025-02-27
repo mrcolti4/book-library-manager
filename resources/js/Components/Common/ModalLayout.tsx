@@ -6,8 +6,15 @@ import { MouseEvent, ReactNode, useEffect } from "react";
 type Props = {
     children: ReactNode;
     className?: string;
+    height?: number;
+    width?: number;
 };
-export default function ModalLayout({ children, className }: Props) {
+export default function ModalLayout({
+    children,
+    className,
+    height = 500,
+    width = 480,
+}: Props) {
     const { setModal } = useModalContext();
 
     const handleClose = () => {
@@ -44,10 +51,7 @@ export default function ModalLayout({ children, className }: Props) {
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
-                className={
-                    "text-center flex flex-col items-center justify-center bg-dark-900 w-[500px] h-[480px] relative z-20 " +
-                    className
-                }
+                className={`text-center flex flex-col items-center justify-center bg-dark-900 w-[${width}px] h-[${height}px] relative z-20 ${className}`}
             >
                 <button
                     type="button"

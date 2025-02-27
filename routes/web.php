@@ -35,6 +35,7 @@ Route::middleware('auth')->name('library.')->prefix('library')->group(function (
 
 Route::middleware('auth')->name('record.')->prefix('record')->group(function () {
     Route::post('/store', [ReadingRecordController::class, 'store'])->name('store');
+    Route::delete('/{record}/destroy', [ReadingRecordController::class, 'destroy'])->name('destroy');
 });
 
 

@@ -29,20 +29,6 @@ class FavoriteBookController extends Controller
         ]);
     }
 
-    public function show(Request $request, FavoriteBook $favoriteBook) 
-    {
-        return Inertia::render('Library/Show', [
-            'book' => $favoriteBook->book,
-            'favoriteBook' => $favoriteBook,
-            'records' => ReadingRecordResource::collection(
-                $favoriteBook
-                    ->records()
-                    ->latest()
-                    ->get()
-            )->collection
-        ]);
-    }
-
     public function store(Request $request, User $user)
     {
         $bookId = $request->get('book_id');
@@ -62,6 +48,20 @@ class FavoriteBookController extends Controller
         ]);
 
         return to_route('home')->with('success', 'You add book to your library!');
+    }
+
+    public function show(Request $request, FavoriteBook $favoriteBook) 
+    {
+        return Inertia::render('Library/Show', [
+            'book' => $favoriteBook->book,
+            'favoriteBook' => $favoriteBook,
+            'records' => ReadingRecordResource::collection(
+                $favoriteBook
+                    ->records()
+                    ->latest()
+                    ->get()
+            )->collection
+        ]);
     }
 
     public function destroy(Request $request, FavoriteBook $book) 

@@ -1,8 +1,14 @@
-import { forwardRef } from "react";
+import { ForwardedRef, forwardRef, ReactNode, RefObject } from "react";
+
+type Props = {
+    value: string;
+    className: string;
+    children?: ReactNode;
+};
 
 export default forwardRef(function InputLabel(
-    { value, className = "", children, ...props },
-    ref,
+    { value, className = "", children, ...props }: Props,
+    ref: ForwardedRef<HTMLLabelElement>,
 ) {
     return (
         <label

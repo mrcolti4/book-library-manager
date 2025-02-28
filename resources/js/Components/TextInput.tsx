@@ -1,16 +1,42 @@
 import clsx from "clsx";
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import {
+    ChangeEvent,
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+} from "react";
 
-export default forwardRef(function TextInput(
+type Props = {
+    id?: string;
+    name?: string;
+    value?: string | number;
+    type: "text" | "password" | "email" | "number";
+    error?: string;
+    className: string;
+    autoComplete?: string;
+    isFocused?: boolean;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    required?: boolean;
+    style?: React.CSSProperties;
+};
+
+type InputHandler = {
+    focus: () => void;
+};
+
+export default forwardRef<InputHandler, Props>(function TextInput(
     { type = "text", className = "", isFocused = false, error = "", ...props },
-    ref,
+    ref
 ) {
-    const localRef = useRef(null);
+    const localRef = useRef<HTMLInputElement | null>(null);
     const classes = clsx(
         "rounded-md border focus:border-white focus:ring-white bg-dark-800 text-white",
         { "border-none": error === "" },
         className,
-        { "border border-red focus:border-red focus:ring-red": error !== "" },
+        {
+            "border border-red focus:border-red focus:ring-red": error !== "",
+        }
     );
 
     useImperativeHandle(ref, () => ({

@@ -1,34 +1,32 @@
 import { Icon } from "@iconify/react";
 import TextInput from "../TextInput";
 import InputError from "../InputError";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react";
 import InputLabel from "../InputLabel";
 
-type props = {
+type Props = {
     id: string;
     label: string;
-    type: "text" | "password" | "email";
-    error: string;
-    data: array;
+    type: "text" | "password" | "email" | "number";
+    error?: string;
+    data: string | number;
     setData: Function;
-    isPassword: boolean;
-    showPassword: boolean;
-    setShowPassword: Function;
+    isFocused?: boolean;
+    children?: ReactNode;
 };
 
 export default function InputField({
     id,
     label,
     type,
-    error,
+    error = "",
     data,
     setData,
-    isPassword = false,
-    showPassword = false,
-    setShowPassword = {},
-}: props) {
+    isFocused = false,
+    children,
+}: Props) {
     const [padding, setPadding] = useState(0);
-    const labelRef = useRef(null);
+    const labelRef = useRef<HTMLLabelElement>(null);
 
     useEffect(() => {
         if (labelRef.current) {
@@ -41,43 +39,29 @@ export default function InputField({
         <div>
             <div className="relative">
                 <InputLabel
-                    className="absolute left-3 text-dark-700 top-1/2 -translate-y-1/2"
+                    className="absolute -translate-y-1/2 left-3 text-dark-700 top-1/2"
                     value={label}
                     ref={labelRef}
                 />
                 <TextInput
                     id={id}
-                    name={name}
+                    name={id}
                     value={data}
                     type={type}
                     error={error}
-                    className="mt-1 block w-full"
+                    className="block w-full mt-1"
                     autoComplete={id}
-                    isFocused={true}
-                    onChange={(e) => setData(id, e.target.value)}
+                    isFocused={isFocused}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setData(id, e.target.value)
+                    }
                     required
                     style={{
                         paddingLeft: `${padding}px`,
                     }}
                 />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-3 items-center justify-center">
-                    {isPassword ? (
-                        <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
-                            <Icon
-                                icon={
-                                    showPassword
-                                        ? "pajamas:eye"
-                                        : "pajamas:eye-slash"
-                                }
-                                color="white"
-                                width="20"
-                                height="20"
-                            />
-                        </button>
-                    ) : null}
+                <div className="absolute flex items-center justify-center gap-3 -translate-y-1/2 right-3 top-1/2">
+                    {children}
                     {error && (
                         <Icon
                             icon="pajamas:error"

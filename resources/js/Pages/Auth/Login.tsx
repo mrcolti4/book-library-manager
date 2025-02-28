@@ -2,6 +2,7 @@ import ButtonWrapper from "@/Components/Auth/ButtonWrapper";
 import InputField from "@/Components/Auth/InputField";
 import PrimaryButton from "@/Components/PrimaryButton";
 import AuthLayout from "@/Layouts/AuthLayout";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { useState, FormEvent } from "react";
 
@@ -53,10 +54,23 @@ export default function Login({ status }: params) {
                         error={errors.password}
                         data={data.password}
                         setData={setData}
-                        isPassword={true}
-                        showPassword={showPassword}
-                        setShowPassword={setShowPassword}
-                    />
+                    >
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            <Icon
+                                icon={
+                                    showPassword
+                                        ? "pajamas:eye"
+                                        : "pajamas:eye-slash"
+                                }
+                                color="white"
+                                width="20"
+                                height="20"
+                            />
+                        </button>
+                    </InputField>
                 </div>
 
                 <ButtonWrapper>

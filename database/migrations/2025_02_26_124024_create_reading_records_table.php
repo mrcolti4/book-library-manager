@@ -18,7 +18,8 @@ return new class extends Migration
             $table->id();
             $table->time('start_time');
             $table->time('end_time');
-            $table->integer('page_count');
+            $table->integer('page_start');
+            $table->integer('page_stop');
             $table->foreignIdFor(FavoriteBook::class);
             $table->foreignIdFor(User::class);
             $table->timestamps();

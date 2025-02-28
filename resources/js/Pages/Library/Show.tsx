@@ -12,6 +12,7 @@ import { BookType } from "@/types/Book/Book";
 import { AnimatePresence } from "motion/react";
 import Title from "@/Components/Title";
 import { LeftSectionLayout } from "@/Components/Common/LeftSectionLayout";
+import { Record } from "@/types/Library/Record";
 
 type ReadingStatus = "start" | "reading" | "stop";
 
@@ -26,11 +27,11 @@ export default function Show({
 }: {
     book: BookType;
     favoriteBook: BookInLibrary;
-    records: [];
+    records: Record[];
 }) {
     const [startTime, setStartTime] = useState<Date>(new Date());
     const [status, setStatus] = useState<ReadingStatus>("start");
-    const { data, setData, post, processing, reset } = useForm({
+    const { data, setData, processing } = useForm({
         start_page: 0,
         stop_page: 0,
     });
@@ -63,7 +64,6 @@ export default function Show({
             );
             break;
     }
-    console.log(records);
 
     function handleStartReading(e: MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -76,17 +76,14 @@ export default function Show({
 
     function handleStopReading(e: MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        const pageCount = data.stop_page - data.start_page;
-        if (data.start_page === 0 && pageCount <= 0) {
-            return;
-        }
 
         const currentEndTime = new Date();
 
         router.post(`/record/store`, {
             start_time: formatISOWithoutMilliseconds(startTime),
             end_time: formatISOWithoutMilliseconds(currentEndTime),
-            page_count: pageCount,
+            page_start: data.start_page,
+            page_stop: data.stop_page,
             favorite_book_id: favoriteBook.id,
         });
     }

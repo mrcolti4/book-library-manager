@@ -23,8 +23,9 @@ class ReadingRecordRequest extends FormRequest
     {
         return [
             'start_time' => ['required', 'date_format:Y-m-d\TH:i:s\Z'],
-            'end_time' => ['required', 'date_format:Y-m-d\TH:i:s\Z'],
-            'page_count' => ['required', 'numeric', 'min:1'],
+            'end_time' => ['required', 'date_format:Y-m-d\TH:i:s\Z', 'gte:start_time'],
+            'page_start' => ['required', 'numeric', 'min:1'],
+            'page_stop' => ['required', 'numeric', 'gte:page_start'],
             'favorite_book_id' => ['required', 'exists:favorite_books,id'],
         ];
     }

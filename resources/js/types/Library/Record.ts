@@ -7,7 +7,8 @@ export interface Record {
     user_id: number;
     start_time: string;
     end_time: string;
-    page_count: number;
+    page_start: number;
+    page_stop: number;
     created_at: string;
     updated_at: string;
 }

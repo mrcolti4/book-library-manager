@@ -89,7 +89,7 @@ export function StopReadingSection({
                     <StatisticBlock
                         key="statistics"
                         bookPages={book.pages}
-                        readPages={records[0].page_count}
+                        readPages={records[0] ? records[0].page_stop : 0}
                     />
                 )}
             </AnimatePresence>

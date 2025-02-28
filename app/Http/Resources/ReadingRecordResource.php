@@ -21,7 +21,8 @@ class ReadingRecordResource extends JsonResource
             'user_id' => $this->user_id,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
-            'page_count' => $this->page_count,
+            'page_start' => $this->page_start,
+            'page_stop' => $this->page_stop,
             'created_at' => $this->created_at,
         ];
     }

@@ -10,7 +10,8 @@ class ReadingRecord extends Model
     protected $fillable = [
         'start_time',
         'end_time',
-        'page_count',
+        'page_start',
+        'page_stop',
         'favorite_book_id',
         'user_id',
     ];

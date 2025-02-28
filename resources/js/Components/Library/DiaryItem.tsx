@@ -22,10 +22,10 @@ export default function DiaryItem({
         new Date(record.end_time).getTime() -
         new Date(record.start_time).getTime();
     const recordTimeDate = new Date(recordTime);
-    const percentOfReading = (record.page_count / bookPagesCount) * 100;
+    const percentOfReading = (record.page_stop / bookPagesCount) * 100;
     const formattedDate = date.toLocaleDateString("en-UK").replace(/\//g, ".");
     const pagesPerHour = (
-        (record.page_count * 60) /
+        (record.page_stop * 60 * 60) /
         recordTimeDate.getSeconds()
     ).toFixed();
 
@@ -40,7 +40,7 @@ export default function DiaryItem({
                     <div className="w-5 h-5 border-4 border-white rounded-md bg-dark-950 after:content-[' '] after:w-1 after:h-full after:block after:bg-dark-900 after:absolute after:left-2 after:top-6" />
                     <div className="flex items-center justify-between grow">
                         <p className="font-bold text-white">{formattedDate}</p>
-                        <p className="mr-5">{record.page_count} pages</p>
+                        <p className="mr-5">{record.page_stop} pages</p>
                     </div>
                 </div>
                 <div className="flex items-center justify-between ml-5 mt-7">
@@ -48,7 +48,7 @@ export default function DiaryItem({
                         <p className="text-xl text-white">
                             {percentOfReading.toFixed(1)}%
                         </p>
-                        <p>{recordTimeDate.getSeconds()} minutes</p>
+                        <p>{recordTimeDate.getMinutes()} minutes</p>
                     </div>
                     <div className="flex items-start gap-2">
                         <div className="max-w-16">

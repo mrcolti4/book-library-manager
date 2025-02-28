@@ -6,7 +6,7 @@ import { BookInLibrary } from "@/types/Library/Library";
 import "swiper/css";
 import "swiper/css/grid";
 
-import Book from "./LibraryBook";
+import LibraryBook from "./LibraryBook";
 
 type props = {
     setSwiperInstance: Function;
@@ -47,7 +47,11 @@ export default function LibrarySlider({
         >
             {data.map((book) => (
                 <SwiperSlide key={book.id}>
-                    <Book book={book.book} id={book.id} />
+                    <LibraryBook
+                        textLeft={true}
+                        book={book.book}
+                        id={book.id}
+                    />
                 </SwiperSlide>
             ))}
         </Swiper>

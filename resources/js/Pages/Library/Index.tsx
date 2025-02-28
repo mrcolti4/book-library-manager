@@ -1,4 +1,4 @@
-import { Link, router, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import { motion } from "motion/react";
 import { ChangeEvent, useState } from "react";
 import { Swiper as SwiperType } from "swiper/types";
@@ -62,6 +62,7 @@ export default function Index({
 
     return (
         <AuthenticatedLayout userLibrary={library}>
+            <Head title="My library" />
             <div className="flex flex-col gap-[10px] lg:flex-row min-h-full grow h-full">
                 <LeftSectionLayout>
                     <motion.form
@@ -105,16 +106,17 @@ export default function Index({
                         </OutlineButton>
                     </motion.form>
 
-                    <div className="flex flex-col gap-5 p-5 mt-20 bg-dark-800 rounded-xl">
+                    <div className="flex flex-col gap-5 p-5 md:w-1/2 lg:w-full lg:mt-20 bg-dark-800 rounded-xl">
                         <Title className="mb-5 text-xl">
                             Recommended books
                         </Title>
                         <div className="flex items-start justify-center gap-5 pr-5">
                             {recommended.map((book) => (
                                 <Book
-                                    className="max-w-[75px] !text-left"
+                                    className="w-1/3"
                                     key={book.id}
                                     book={book}
+                                    textLeft={true}
                                 />
                             ))}
                         </div>

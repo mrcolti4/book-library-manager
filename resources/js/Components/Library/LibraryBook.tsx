@@ -10,9 +10,10 @@ import DeleteBookModal from "./DeleteBookModal";
 type props = {
     book: BookType;
     id: number;
+    textLeft?: boolean;
 };
 
-export default function LibraryBook({ book, id }: props) {
+export default function LibraryBook({ book, id, textLeft = false }: props) {
     const { setModal } = useModalContext();
 
     const handleDeleteClick = () => {
@@ -31,19 +32,19 @@ export default function LibraryBook({ book, id }: props) {
             transition={{
                 duration: 0.3,
             }}
-            className="flex flex-col items-center justify-center text-center"
+            className="flex flex-col items-center justify-center"
         >
             <img
                 src={book.poster}
                 alt={book.title}
                 className="w-[137px] h-[208px] rounded-md"
             />
-            <div className="flex items-center gap-5 text-left">
-                <div>
+            <div className="flex items-start gap-5">
+                <div className="text-left">
                     <button
                         onClick={handleClick}
                         type="button"
-                        className="font-bold text-white"
+                        className="font-bold text-left text-white line-clamp-1"
                     >
                         {book.title}
                     </button>

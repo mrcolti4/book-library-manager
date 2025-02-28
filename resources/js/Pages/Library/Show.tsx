@@ -1,5 +1,5 @@
 import { MouseEvent, useState } from "react";
-import { router, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 
 import SectionWrapper from "@/Components/SectionWrapper";
 import { StartReadingSection } from "@/Components/Library/StartReadingSection";
@@ -93,6 +93,7 @@ export default function Show({
 
     return (
         <AuthenticatedLayout>
+            <Head title={book.title} />
             <div className="flex flex-col gap-[10px] lg:flex-row min-h-full grow h-full">
                 <LeftSectionLayout>
                     <AnimatePresence>{section}</AnimatePresence>

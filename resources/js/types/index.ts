@@ -3,4 +3,5 @@ export type AuthenticateUserData = {
     email: string;
     email_verified_at: string | null;
     name: string;
+    role: "user" | "admin";
 };

@@ -7,6 +7,8 @@ import OutlineButton from "../OutlineButton";
 import { AuthenticateUserData } from "@/types";
 import { router, usePage } from "@inertiajs/react";
 import ModalLayout from "../Common/ModalLayout";
+import { DangerButton } from "../DangerButton";
+import { DeleteBookModal } from "../Admin/DeleteBookModal";
 
 type props = {
     book: BookType;
@@ -35,40 +37,12 @@ export default function BookModal({ book }: props) {
         );
     };
 
-    const handleClose = () => {
-        setModal(null);
+    const handleDeleteBtn = () => {
+        setModal(<DeleteBookModal id={book.id} />);
     };
-
-    const handleCloseOnBackdrop = (e: MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            setModal(null);
-        }
-    };
-
-    useEffect(() => {
-        const handleEscClose = (e: globalThis.KeyboardEvent) => {
-            if (e.key === "Escape") {
-                setModal(null);
-            }
-        };
-
-        document.addEventListener("keydown", handleEscClose);
-        return () => document.removeEventListener("keydown", handleEscClose);
-    }, []);
 
     return (
         <ModalLayout className="h-[500px] w-[480px]">
-            <button
-                type="button"
-                onClick={handleClose}
-                className="absolute transition top-3 right-3 pointer hover:text-white"
-            >
-                <Icon
-                    icon="material-symbols:close-rounded"
-                    width="30"
-                    height="30"
-                />
-            </button>
             <img
                 src={book.poster}
                 alt={book.title}
@@ -78,7 +52,7 @@ export default function BookModal({ book }: props) {
             <h4 className="text-sm">{book.author}</h4>
             {!bookInLibrary ? (
                 <OutlineButton
-                    className="text-sm py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4"
+                    className="py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4"
                     disabled={false}
                     onClick={handleAddBookToLibrary}
                 >
@@ -88,6 +62,15 @@ export default function BookModal({ book }: props) {
                 <p className="pt-4 text-dark-700">
                     Book already in your library
                 </p>
+            )}
+            {user.role === "admin" && (
+                <DangerButton
+                    className="py-3 mt-4 px-[29px] !rounded-[30px]"
+                    disabled={false}
+                    onClick={handleDeleteBtn}
+                >
+                    Delete book
+                </DangerButton>
             )}
         </ModalLayout>
     );

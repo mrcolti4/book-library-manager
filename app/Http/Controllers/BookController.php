@@ -17,12 +17,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::cursorPaginate(10);
-
-        return Inertia::render('Home', [
-            'books' => BookResource::collection($books),
-            'library' => FavoriteBook::where('user_id', Auth::id())->get(),
-        ]);
+        
     }
 
     /**
@@ -70,6 +65,8 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+
+        return back()->with('success', 'You remove book from your library!');
     }
 }

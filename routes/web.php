@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookHomeController;
 use App\Http\Controllers\FavoriteBookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReadingRecordController;
-use App\Models\FavoriteBook;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,7 +18,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', [BookController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
+Route::get('/home', BookHomeController::class)->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -38,6 +38,13 @@ Route::middleware('auth')->name('record.')->prefix('record')->group(function () 
     Route::delete('/{record}/destroy', [ReadingRecordController::class, 'destroy'])->name('destroy');
 });
 
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'middleware' => ['auth', 'admin'],
+], function () {
+    Route::delete('/books/{book}/destroy', [BookController::class, 'destroy'])->name('books.destroy');
+});
+
 
 require __DIR__.'/auth.php';
-require __DIR__.'/api.php';

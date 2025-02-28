@@ -20,8 +20,8 @@ return new class extends Migration
             $table->time('end_time');
             $table->integer('page_start');
             $table->integer('page_stop');
-            $table->foreignIdFor(FavoriteBook::class);
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(FavoriteBook::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

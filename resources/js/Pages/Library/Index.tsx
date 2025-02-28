@@ -141,11 +141,13 @@ export default function Index({
                         <div className="flex gap-4">
                             <select onChange={handleSelectChange}>
                                 <option value="unread">Unread</option>
-                                <option value="in_progress">In progress</option>
+                                <option value="in_progress" selected>
+                                    In progress
+                                </option>
                                 <option value="done">Done</option>
                                 <option value="all_books">All books</option>
                             </select>
-                            {library.length > 0 && (
+                            {library.length > perPage && (
                                 <>
                                     <PaginationButton
                                         onClick={handlePrevButton}

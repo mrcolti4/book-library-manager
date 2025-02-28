@@ -53,7 +53,6 @@ class FavoriteBookController extends Controller
 
 
         if(null !== $bookInLibrary) {
-            //TODO: implement error
             return back()->with('error', 'You already have this book in your library');
         }
 

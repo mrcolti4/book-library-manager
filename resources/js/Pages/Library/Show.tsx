@@ -29,10 +29,12 @@ export default function Show({
     favoriteBook: BookInLibrary;
     records: Record[];
 }) {
+    const lastRecordPage = records.length > 0 ? records[0].page_stop : 0;
+
     const [startTime, setStartTime] = useState<Date>(new Date());
     const [status, setStatus] = useState<ReadingStatus>("start");
-    const { data, setData, processing } = useForm({
-        start_page: 0,
+    const { data, setData, processing, reset } = useForm({
+        start_page: lastRecordPage,
         stop_page: 0,
     });
 
@@ -86,6 +88,8 @@ export default function Show({
             page_stop: data.stop_page,
             favorite_book_id: favoriteBook.id,
         });
+
+        reset("start_page", "stop_page");
     }
 
     return (

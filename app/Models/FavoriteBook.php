@@ -10,7 +10,8 @@ class FavoriteBook extends Model
 {
     protected $fillable = [
         'book_id',
-        'user_id'
+        'user_id',
+        'status'
     ];
     public function user(): BelongsTo
     {

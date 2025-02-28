@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ReadingRecordResource;
+use App\Models\Book;
 use App\Models\FavoriteBook;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class FavoriteBookController extends Controller
     {
         $filter = $request->get('filter', 'all_books');
         $query = FavoriteBook::where('user_id', Auth::id())->with('book');
-
+        $recommendedBooks = Book::latest()->limit(3)->get();
         if ('all_books' !== $filter) {
             $query->where('status', $filter);
         }
@@ -23,7 +24,8 @@ class FavoriteBookController extends Controller
         $library = $query->get();
         
         return Inertia::render('Library/Index', [
-            'library' => $library
+            'library' => $library,
+            'recommended' => $recommendedBooks
         ]);
     }
 

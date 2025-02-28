@@ -10,6 +10,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { BookInLibrary } from "@/types/Library/Library";
 import { BookType } from "@/types/Book/Book";
 import { AnimatePresence } from "motion/react";
+import Title from "@/Components/Title";
+import { LeftSectionLayout } from "@/Components/Common/LeftSectionLayout";
 
 type ReadingStatus = "start" | "reading" | "stop";
 
@@ -61,6 +63,7 @@ export default function Show({
             );
             break;
     }
+    console.log(records);
 
     function handleStartReading(e: MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -86,20 +89,29 @@ export default function Show({
             page_count: pageCount,
             favorite_book_id: favoriteBook.id,
         });
-        setStatus("stop");
     }
 
     return (
         <AuthenticatedLayout>
             <div className="flex flex-col gap-[10px] lg:flex-row min-h-full grow h-full">
-                <SectionWrapper className="flex flex-col h-full gap-5 md:flex-row lg:flex-col lg:w-1/3 grow">
+                <LeftSectionLayout>
                     <AnimatePresence>{section}</AnimatePresence>
-                </SectionWrapper>
-                <SectionWrapper className="h-full p-4 lg:w-2/3 grow">
-                    <img src={book.poster} />
-                    <h2>{book.title}</h2>
-                    <p>{book.author}</p>
-                    <div className="inline-flex items-center justify-center border border-white rounded-full">
+                </LeftSectionLayout>
+                <SectionWrapper className="h-full p-4 text-center lg:w-2/3 grow">
+                    <Title className="!text-3xl text-left mb-10">
+                        My reading
+                    </Title>
+                    <img
+                        className="mx-auto w-[224px] h-[340px]"
+                        src={book.poster}
+                    />
+                    <div className="my-[25px]">
+                        <h2 className="text-xl font-bold text-white">
+                            {book.title}
+                        </h2>
+                        <p className="text-sm">{book.author}</p>
+                    </div>
+                    <div className="inline-flex items-center justify-center border border-white rounded-full mb-14">
                         <div className="w-10 h-10 m-1 rounded-full bg-red" />
                     </div>
                 </SectionWrapper>

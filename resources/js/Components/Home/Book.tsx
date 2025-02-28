@@ -6,9 +6,10 @@ import BookModal from "./BookModal";
 
 type props = {
     book: BookType;
+    className?: string;
 };
 
-export default function Book({ book }: props) {
+export default function Book({ book, className }: props) {
     const { setModal } = useModalContext();
 
     const handleClick = () => {
@@ -23,7 +24,10 @@ export default function Book({ book }: props) {
             transition={{
                 duration: 0.3,
             }}
-            className="flex flex-col items-center justify-center text-center"
+            className={
+                "flex flex-col items-center justify-center text-center " +
+                className
+            }
         >
             <img
                 src={book.poster}

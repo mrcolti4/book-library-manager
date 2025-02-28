@@ -3,7 +3,6 @@ import InputField from "../Auth/InputField";
 import OutlineButton from "../OutlineButton";
 import Title from "../Title";
 import { StopRecordSectionProps } from "@/types/Library/Record";
-import DiaryItem from "./DiaryItem";
 import DiaryBlock from "./DiaryBlock";
 import { useState } from "react";
 import StatisticBlock from "./StatisticBlock";
@@ -42,7 +41,7 @@ export function StopReadingSection({
                     setData={setData}
                 />
                 <OutlineButton
-                    className="text-sm py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[120px] capitalize"
+                    className="py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[120px] capitalize"
                     disabled={processing}
                     onClick={onClick}
                 >
@@ -50,7 +49,9 @@ export function StopReadingSection({
                 </OutlineButton>
             </motion.form>
             <div className="flex items-center justify-between">
-                <Title>Diary</Title>
+                <Title>
+                    {activeBlock === "diary" ? "Diary" : "Statistics"}
+                </Title>
                 <div className="flex items-center gap-2">
                     <button
                         onClick={() => setActiveBlock("diary")}
@@ -76,12 +77,17 @@ export function StopReadingSection({
                     </button>
                 </div>
             </div>
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {activeBlock === "diary" && (
-                    <DiaryBlock records={records} pages={book.pages} />
+                    <DiaryBlock
+                        key="diary"
+                        records={records}
+                        pages={book.pages}
+                    />
                 )}
                 {activeBlock === "statistics" && (
                     <StatisticBlock
+                        key="statistics"
                         bookPages={book.pages}
                         readPages={records[0].page_count}
                     />

@@ -67,7 +67,7 @@ export default function Home({
                             setData={setData}
                         />
                         <OutlineButton
-                            className="text-sm py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[120px] capitalize"
+                            className="py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[130px] capitalize"
                             disabled={processing}
                         >
                             To apply

@@ -1,4 +1,4 @@
-import { router, useForm } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 import { motion } from "motion/react";
 import { ChangeEvent, useState } from "react";
 import { Swiper as SwiperType } from "swiper/types";
@@ -16,12 +16,22 @@ import PaginationButton from "@/Components/Home/PaginationButton";
 import usePerPage from "@/hooks/usePerPage";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import AccentWord from "@/Components/Home/AccentWord";
+import { LeftSectionLayout } from "@/Components/Common/LeftSectionLayout";
+import { BookType } from "@/types/Book/Book";
+import Book from "@/Components/Home/Book";
 
-export default function Index({ library }: { library: BookInLibrary[] }) {
+export default function Index({
+    library,
+    recommended,
+}: {
+    library: BookInLibrary[];
+    recommended: BookType[];
+}) {
     const perPage = usePerPage();
     const { data, setData, post, processing, reset } = useForm({
         title: "",
         author: "",
+        pages: 0,
     });
     const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(
         null
@@ -53,7 +63,7 @@ export default function Index({ library }: { library: BookInLibrary[] }) {
     return (
         <AuthenticatedLayout userLibrary={library}>
             <div className="flex flex-col gap-[10px] lg:flex-row min-h-full grow h-full">
-                <SectionWrapper className="flex flex-col h-full gap-5 md:flex-row lg:flex-col lg:w-1/3 grow">
+                <LeftSectionLayout>
                     <motion.form
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -63,7 +73,9 @@ export default function Index({ library }: { library: BookInLibrary[] }) {
                         }}
                         className="flex flex-col gap-2 md:w-1/2 lg:w-auto"
                     >
-                        <h3 className="text-sm text-white">Filters: </h3>
+                        <h3 className="text-sm text-white">
+                            Create your library:
+                        </h3>
                         <InputField
                             id="title"
                             type="text"
@@ -78,15 +90,49 @@ export default function Index({ library }: { library: BookInLibrary[] }) {
                             data={data.author}
                             setData={setData}
                         />
+                        <InputField
+                            id="pages"
+                            type="number"
+                            label="Number of pages: "
+                            data={data.pages}
+                            setData={setData}
+                        />
                         <OutlineButton
-                            className="text-sm py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[120px] capitalize"
+                            className="py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[130px] capitalize"
                             disabled={processing}
                         >
-                            To apply
+                            Add book
                         </OutlineButton>
                     </motion.form>
-                </SectionWrapper>
-                <SectionWrapper className="h-full p-4 lg:w-2/3 grow">
+
+                    <div className="flex flex-col gap-5 p-5 mt-20 bg-dark-800 rounded-xl">
+                        <Title className="mb-5 text-xl">
+                            Recommended books
+                        </Title>
+                        <div className="flex items-start justify-center gap-5 pr-5">
+                            {recommended.map((book) => (
+                                <Book
+                                    className="max-w-[75px] !text-left"
+                                    key={book.id}
+                                    book={book}
+                                />
+                            ))}
+                        </div>
+                        <Link
+                            className="inline-flex items-center justify-between underline"
+                            href={route("home")}
+                        >
+                            Home
+                            <Icon
+                                icon="material-symbols:arrow-forward-rounded"
+                                width="30"
+                                height="30"
+                                color="white"
+                            />
+                        </Link>
+                    </div>
+                </LeftSectionLayout>
+                <SectionWrapper className="h-full p-4 text-center lg:w-2/3 grow">
                     <div className="flex items-center justify-between mb-10">
                         <Title>My Library</Title>
 

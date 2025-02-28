@@ -199,7 +199,7 @@ export default function AuthenticatedLayout({
                     </header>
                 )}
 
-                <main className="h-full min-h-full grow">{children}</main>
+                <main className="flex-grow">{children}</main>
                 <AnimatePresence>{modal}</AnimatePresence>
             </div>
         </ModalContext.Provider>

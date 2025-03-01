@@ -81,7 +81,7 @@ export default function Register() {
                     </PrimaryButton>
                     <Link
                         href={route("login")}
-                        className="text-dark-700 underline transition hover:text-white max-sm:text-sm"
+                        className="underline transition text-dark-700 hover:text-white max-sm:text-sm"
                     >
                         Already registered?
                     </Link>

@@ -10,12 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->route('home');
 });
 
 Route::get('/home', BookHomeController::class)->middleware(['auth', 'verified'])->name('home');
@@ -43,7 +38,13 @@ Route::group([
     'as' => 'admin.',
     'middleware' => ['auth', 'admin'],
 ], function () {
-    Route::delete('/books/{book}/destroy', [BookController::class, 'destroy'])->name('books.destroy');
+    Route::get('/', function () {
+        return Inertia::render('Admin/Index');
+    })->name('index');
+    Route::get('/users', function () {
+        return Inertia::render('Admin/Users/Index');
+    })->name('users');
+    Route::resource('books', BookController::class);
 });
 
 

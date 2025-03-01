@@ -17,7 +17,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        
+        return Inertia::render('Admin/Books/Index', [
+            'data' => BookResource::collection(Book::cursorPaginate(10)),
+        ]);
     }
 
     /**
@@ -49,7 +51,9 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return Inertia::render('Admin/Books/Edit', [
+            'book' => $book,
+        ]);
     }
 
     /**

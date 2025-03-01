@@ -13,7 +13,7 @@ export function DeleteBookModal({ id }: { id: number }) {
     };
 
     const handleDelete = () => {
-        destroy(`/admin/books/${id}/destroy`, {
+        destroy(`/admin/books/${id}`, {
             onSuccess: () => {
                 setModal(null);
             },

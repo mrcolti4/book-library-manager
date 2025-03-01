@@ -59,6 +59,16 @@ export default function AuthenticatedLayout({
                                     >
                                         My library
                                     </NavLink>
+                                    {user.role === "admin" && (
+                                        <NavLink
+                                            href={route("admin.index")}
+                                            active={route().current(
+                                                "admin.index"
+                                            )}
+                                        >
+                                            Admin panel
+                                        </NavLink>
+                                    )}
                                 </div>
                             </div>
 

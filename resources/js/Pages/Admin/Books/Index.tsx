@@ -1,5 +1,7 @@
 import BookItem from "@/Components/Admin/Books/BookItem";
 import NavLink from "@/Components/Admin/NavLink";
+import TableColumn from "@/Components/Admin/TableColumn";
+import TableRow from "@/Components/Admin/TableRow";
 import SectionWrapper from "@/Components/SectionWrapper";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { BookType } from "@/types/Book/Book";
@@ -10,11 +12,27 @@ export default function Index({ data }: { data: PaginateData<BookType> }) {
     return (
         <AdminLayout>
             <SectionWrapper>
-                <div className="grid gap-4">
-                    {data.data.map((book) => (
-                        <BookItem key={book.id} book={book} />
-                    ))}
-                </div>
+                <table className="w-full border-collapse table-fixed">
+                    <thead>
+                        <TableRow>
+                            <TableColumn className="w-1/12">ID</TableColumn>
+                            <TableColumn className="w-1/6">Author</TableColumn>
+                            <TableColumn className="w-1/6">Title</TableColumn>
+                            <TableColumn className="w-1/6">
+                                Created at
+                            </TableColumn>
+                            <TableColumn className="w-1/6">
+                                Updated at
+                            </TableColumn>
+                            <TableColumn className="w-1/6">Actions</TableColumn>
+                        </TableRow>
+                    </thead>
+                    <tbody>
+                        {data.data.map((book) => (
+                            <BookItem key={book.id} book={book} />
+                        ))}
+                    </tbody>
+                </table>
                 <ul className="flex items-center justify-between mt-5">
                     {data.links.prev && (
                         <li>

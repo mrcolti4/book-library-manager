@@ -4,6 +4,8 @@ import { useModalContext } from "@/hooks/useModalContext";
 import { BookType } from "@/types/Book/Book";
 import { DeleteBookModal } from "../DeleteBookModal";
 import { router } from "@inertiajs/react";
+import TableColumn from "../TableColumn";
+import TableRow from "../TableRow";
 
 export default function BookItem({ book }: { book: BookType }) {
     const { setModal } = useModalContext();
@@ -16,15 +18,19 @@ export default function BookItem({ book }: { book: BookType }) {
     };
 
     return (
-        <div className="flex items-center justify-between p-3 border rounded-xl border-dark-950">
-            <div className="flex gap-5 font-bold text-white">
-                <p>{book.id}</p>
-                <p>{book.title}</p>
-                <p>{book.author}</p>
-                <p>{book.created_at}</p>
-                <p>{book.updated_at}</p>
-            </div>
-            <div className="flex gap-3">
+        <TableRow className="transition hover:bg-dark-950">
+            <TableColumn className="w-1/12">{book.id}</TableColumn>
+            <TableColumn className="w-1/6">{book.title}</TableColumn>
+            <TableColumn className="w-1/6">{book.author}</TableColumn>
+            <TableColumn className="w-1/6">
+                {new Date(book.created_at).toLocaleString("en-UK")}
+            </TableColumn>
+            <TableColumn className="w-1/6">
+                {book.updated_at
+                    ? new Date(book.updated_at).toLocaleString("en-UK")
+                    : "-"}
+            </TableColumn>
+            <TableColumn className="flex w-1/6 gap-3">
                 <OutlineButton
                     onClick={handleUpdate}
                     disabled={false}
@@ -35,7 +41,7 @@ export default function BookItem({ book }: { book: BookType }) {
                 <DangerButton disabled={false} onClick={handleDelete}>
                     Delete
                 </DangerButton>
-            </div>
-        </div>
+            </TableColumn>
+        </TableRow>
     );
 }

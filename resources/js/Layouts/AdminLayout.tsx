@@ -9,7 +9,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     return (
         <AuthenticatedLayout>
             <div className="flex gap-5">
-                <SectionWrapper className="w-1/6 p-5">
+                <SectionWrapper className="w-1/5 p-5">
                     <ul className="flex flex-col gap-4">
                         <li>
                             <NavLink

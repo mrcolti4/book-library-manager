@@ -27,7 +27,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Books/Create');
     }
 
     /**
@@ -35,7 +35,11 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        Book::create($data);
+
+        return back()->with('success', 'You add book on your site!');
     }
 
     /**
@@ -61,7 +65,11 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $data = $request->validated();
+        
+        $book->update($data);
+
+        return back()->with('success', 'You update book successfully!');
     }
 
     /**

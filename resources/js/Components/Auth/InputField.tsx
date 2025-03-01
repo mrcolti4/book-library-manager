@@ -7,7 +7,7 @@ import InputLabel from "../InputLabel";
 type Props = {
     id: string;
     label: string;
-    type: "text" | "password" | "email" | "number";
+    type: "text" | "password" | "email" | "number" | "file";
     error?: string;
     data: string | number;
     setData: Function;

@@ -22,7 +22,8 @@ class BookResource extends JsonResource
             'poster' => $this->resource->poster,
             'published_at' => $this->resource->published_at,
             'pages' => $this->resource->pages,
-            'created_at' => $this->resource->created_at
+            'created_at' => $this->resource->created_at,
+            'updated_at' => $this->resource->updated_at
         ];
     }
 }

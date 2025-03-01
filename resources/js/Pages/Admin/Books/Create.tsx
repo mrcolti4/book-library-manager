@@ -2,28 +2,29 @@ import InputField from "@/Components/Auth/InputField";
 import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import AdminLayout from "@/Layouts/AdminLayout";
-import { BookType } from "@/types/Book/Book";
-import { useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { FormEvent } from "react";
 
-export default function Edit({ book }: { book: BookType }) {
-    const { setData, data, patch, processing, errors } = useForm({
-        title: book.title,
-        author: book.author,
-        pages: book.pages,
-        published_at: book.published_at,
-        poster: book.poster,
+export default function Create() {
+    const { data, setData, post, processing, errors } = useForm({
+        title: "",
+        author: "",
+        pages: 0,
+        published_at: "",
+        poster: "",
     });
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        patch(route("admin.books.update", book.id));
+        post(route("admin.books.store"));
     };
 
     return (
         <AdminLayout>
+            <Head title="Create Book" />
             <SectionWrapper>
+                <h1 className="text-3xl font-bold text-white">Create Book</h1>
                 <form onSubmit={submit} className="grid grid-cols-2 gap-4">
                     <InputField
                         id="title"
@@ -69,7 +70,7 @@ export default function Edit({ book }: { book: BookType }) {
                         disabled={processing}
                         className="mt-4 max-w-[200px] col-start-1 col-end-1"
                     >
-                        Update
+                        Create book
                     </OutlineButton>
                 </form>
             </SectionWrapper>

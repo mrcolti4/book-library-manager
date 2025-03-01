@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Book extends Model
 {
+    protected $fillable = [
+        'title',
+        'author',
+        'published_at',
+        'pages',
+        'poster',  
+    ];
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;
 

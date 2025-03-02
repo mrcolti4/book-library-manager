@@ -76,16 +76,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                             All
                                         </NavLink>
                                     </li>
-                                    <li>
-                                        <NavLink
-                                            isActive={route().current(
-                                                "admin.users.create"
-                                            )}
-                                            href="/admin/users/create"
-                                        >
-                                            Create
-                                        </NavLink>
-                                    </li>
                                 </ul>
                             )}
                         </li>

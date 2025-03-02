@@ -64,7 +64,7 @@ export default function AuthenticatedLayout({
                                             href={route("admin.index")}
                                             active={route()
                                                 .current()
-                                                ?.startsWith("admin.books")}
+                                                ?.startsWith("admin.")}
                                         >
                                             Admin panel
                                         </NavLink>

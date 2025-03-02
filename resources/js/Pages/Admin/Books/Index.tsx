@@ -7,11 +7,13 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import { BookType } from "@/types/Book/Book";
 import { PaginateData } from "@/types/PaginateData";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Head } from "@inertiajs/react";
 import { ReactNode } from "react";
 
 function Index({ data }: { data: PaginateData<BookType> }) {
     return (
         <>
+            <Head title="Admin | Books" />
             <SectionWrapper>
                 <table className="w-full border-collapse table-fixed">
                     <thead>

@@ -6,7 +6,8 @@ import SectionWrapper from "@/Components/SectionWrapper";
 import AuthenticatedLayout from "./AuthenticatedLayout";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-    const isBookActive = route().current()?.startsWith("admin.books");
+    const isBookActive = route().current()?.startsWith("admin.books") ?? false;
+    const isUserActive = route().current()?.startsWith("admin.users") ?? false;
 
     return (
         <AuthenticatedLayout>
@@ -53,8 +54,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                         </li>
                         <li>
                             <NavLink
-                                isActive={route().current("adsmin.books.index")}
-                                href="/admin/books"
+                                isActive={isUserActive}
+                                href="/admin/users"
                                 only={["books"]}
                             >
                                 <Icon
@@ -63,6 +64,30 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                 />
                                 Users
                             </NavLink>
+                            {isUserActive && (
+                                <ul className="flex flex-col gap-2 pl-4 mt-2">
+                                    <li>
+                                        <NavLink
+                                            isActive={route().current(
+                                                "admin.users.index"
+                                            )}
+                                            href="/admin/users"
+                                        >
+                                            All
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
+                                            isActive={route().current(
+                                                "admin.users.create"
+                                            )}
+                                            href="/admin/users/create"
+                                        >
+                                            Create
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            )}
                         </li>
                     </ul>
                 </SectionWrapper>

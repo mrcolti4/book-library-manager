@@ -3,7 +3,7 @@ import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { BookType } from "@/types/Book/Book";
-import { useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { FormEvent, ReactNode } from "react";
 
 function Edit({ book }: { book: BookType }) {
@@ -23,6 +23,7 @@ function Edit({ book }: { book: BookType }) {
 
     return (
         <>
+            <Head title={book.title} />
             <SectionWrapper>
                 <form onSubmit={submit} className="grid grid-cols-2 gap-4">
                     <InputField

@@ -1,3 +1,4 @@
+import HeadTitle from "@/Components/Admin/HeadTitle";
 import InputField from "@/Components/Auth/InputField";
 import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
@@ -24,7 +25,7 @@ function Create() {
         <>
             <Head title="Create Book" />
             <SectionWrapper>
-                <h1 className="text-3xl font-bold text-white">Create Book</h1>
+                <HeadTitle>Create Book</HeadTitle>
                 <form onSubmit={submit} className="grid grid-cols-2 gap-4">
                     <InputField
                         id="title"

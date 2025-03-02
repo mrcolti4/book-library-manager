@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\BookController;
+use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\BookHomeController;
 use App\Http\Controllers\FavoriteBookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReadingRecordController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -41,9 +41,9 @@ Route::group([
     Route::get('/', function () {
         return Inertia::render('Admin/Index');
     })->name('index');
-    Route::get('/users', function () {
-        return Inertia::render('Admin/Users/Index');
-    })->name('users');
+    Route::post('users/{user}/block', [UserController::class, 'block'])->name('users.block');
+    Route::post('users/{user}/unblock', [UserController::class, 'unblock'])->name('users.unblock');
+    Route::resource('users', UserController::class);
     Route::resource('books', BookController::class);
 });
 

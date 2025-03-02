@@ -6,8 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckIsUserAdmin
+class CheckIsUserBlocked
 {
+    protected $routeMiddleware = ['blocked'];
     /**
      * Handle an incoming request.
      *
@@ -15,8 +16,8 @@ class CheckIsUserAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->role !== 'admin') {
-            abort(403, 'Unauthorized action');
+        if(null !== $request->user()->blocked_at) {
+            abort(403, 'Your account has been blocked.');
         }
         return $next($request);
     }

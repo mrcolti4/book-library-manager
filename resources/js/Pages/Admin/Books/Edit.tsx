@@ -4,9 +4,9 @@ import SectionWrapper from "@/Components/SectionWrapper";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { BookType } from "@/types/Book/Book";
 import { useForm } from "@inertiajs/react";
-import { FormEvent } from "react";
+import { FormEvent, ReactNode } from "react";
 
-export default function Edit({ book }: { book: BookType }) {
+function Edit({ book }: { book: BookType }) {
     const { setData, data, patch, processing, errors } = useForm({
         title: book.title,
         author: book.author,
@@ -22,7 +22,7 @@ export default function Edit({ book }: { book: BookType }) {
     };
 
     return (
-        <AdminLayout>
+        <>
             <SectionWrapper>
                 <form onSubmit={submit} className="grid grid-cols-2 gap-4">
                     <InputField
@@ -73,6 +73,10 @@ export default function Edit({ book }: { book: BookType }) {
                     </OutlineButton>
                 </form>
             </SectionWrapper>
-        </AdminLayout>
+        </>
     );
 }
+
+Edit.layout = (page: ReactNode) => <AdminLayout children={page} />;
+
+export default Edit;

@@ -16,7 +16,7 @@ export default function NavLink({
     only?: string[];
 }) {
     const classes = clsx(
-        "inline-flex items-center justify-center gap-1 text-xl font-semibold leading-5",
+        "inline-flex items-center pointer justify-center gap-1 text-xl font-semibold leading-5",
         isActive ? "text-white" : "text-gray-500",
         className
     );

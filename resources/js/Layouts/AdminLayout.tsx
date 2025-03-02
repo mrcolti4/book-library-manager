@@ -6,7 +6,8 @@ import SectionWrapper from "@/Components/SectionWrapper";
 import AuthenticatedLayout from "./AuthenticatedLayout";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-    const isBookActive = route().current("admin.books.index");
+    const isBookActive = route().current()?.startsWith("admin.books");
+
     return (
         <AuthenticatedLayout>
             <div className="flex gap-5">
@@ -31,6 +32,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                             isActive={route().current(
                                                 "admin.books.index"
                                             )}
+                                            only={["books"]}
                                             href="/admin/books"
                                         >
                                             All

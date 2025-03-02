@@ -3,9 +3,9 @@ import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, useForm } from "@inertiajs/react";
-import { FormEvent } from "react";
+import { FormEvent, ReactNode } from "react";
 
-export default function Create() {
+function Create() {
     const { data, setData, post, processing, errors } = useForm({
         title: "",
         author: "",
@@ -21,7 +21,7 @@ export default function Create() {
     };
 
     return (
-        <AdminLayout>
+        <>
             <Head title="Create Book" />
             <SectionWrapper>
                 <h1 className="text-3xl font-bold text-white">Create Book</h1>
@@ -74,6 +74,9 @@ export default function Create() {
                     </OutlineButton>
                 </form>
             </SectionWrapper>
-        </AdminLayout>
+        </>
     );
 }
+Create.layout = (page: ReactNode) => <AdminLayout children={page} />;
+
+export default Create;

@@ -7,14 +7,15 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import { BookType } from "@/types/Book/Book";
 import { PaginateData } from "@/types/PaginateData";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { ReactNode } from "react";
 
-export default function Index({ data }: { data: PaginateData<BookType> }) {
+function Index({ data }: { data: PaginateData<BookType> }) {
     return (
-        <AdminLayout>
+        <>
             <SectionWrapper>
                 <table className="w-full border-collapse table-fixed">
                     <thead>
-                        <TableRow>
+                        <TableRow className="!border-b-0">
                             <TableColumn className="w-1/12">ID</TableColumn>
                             <TableColumn className="w-1/6">Author</TableColumn>
                             <TableColumn className="w-1/6">Title</TableColumn>
@@ -58,6 +59,9 @@ export default function Index({ data }: { data: PaginateData<BookType> }) {
                     )}
                 </ul>
             </SectionWrapper>
-        </AdminLayout>
+        </>
     );
 }
+Index.layout = (page: ReactNode) => <AdminLayout children={page} />;
+
+export default Index;

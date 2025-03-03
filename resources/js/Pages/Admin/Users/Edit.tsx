@@ -55,11 +55,11 @@ function Edit({ user }: { user: AuthenticateUserData }) {
                     />
                     <OutlineButton
                         disabled={processing}
-                        className="mt-4 max-w-[200px] col-start-1 col-end-1"
+                        className="mt-4 max-w-[130px] col-start-1 col-end-1"
                     >
                         Update
                     </OutlineButton>
-                    <div>
+                    <div className="mt-4">
                         {user.blocked_at ? (
                             <SuccessButton
                                 onClick={handleUnblock}

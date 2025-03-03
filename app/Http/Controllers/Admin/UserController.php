@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -77,6 +78,10 @@ class UserController extends Controller
 
     public function block(User $user) 
     {
+        if(Auth::id() === $user->id) {
+            return back()->with('error', 'You can not block yourself!');
+        }
+        
         $user->update([
             'blocked_at' => now()
         ]);

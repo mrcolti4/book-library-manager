@@ -1,16 +1,51 @@
-import { ReactNode } from "react";
+import { usePage } from "@inertiajs/react";
+import { AnimatePresence } from "motion/react";
+import { ReactNode, useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 import NavLink from "@/Components/Admin/NavLink";
 import SectionWrapper from "@/Components/SectionWrapper";
+import FlashMessage from "@/Components/Common/FlashMessage";
+
 import AuthenticatedLayout from "./AuthenticatedLayout";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
+    const [success, setSuccess] = useState<string | null>("");
+    const [error, setError] = useState<string | null>("");
     const isBookActive = route().current()?.startsWith("admin.books") ?? false;
     const isUserActive = route().current()?.startsWith("admin.users") ?? false;
+    const { props } = usePage<{
+        flash: { success: string | null; error: string | null };
+    }>();
+    useEffect(() => {
+        if (props.flash.success) {
+            setSuccess(props.flash.success);
+        }
+        if (props.flash.error) {
+            setError(props.flash.error);
+        }
+    }, [props.flash]);
 
     return (
         <AuthenticatedLayout>
+            <AnimatePresence>
+                {success && (
+                    <FlashMessage
+                        className="bg-emerald-700/50"
+                        setMessage={setSuccess}
+                    >
+                        {success}
+                    </FlashMessage>
+                )}
+                {error && (
+                    <FlashMessage
+                        className="bg-rose-700/50"
+                        setMessage={setError}
+                    >
+                        {error}
+                    </FlashMessage>
+                )}
+            </AnimatePresence>
             <div className="flex gap-5">
                 <SectionWrapper className="!w-1/6 p-5">
                     <ul className="flex flex-col gap-4">

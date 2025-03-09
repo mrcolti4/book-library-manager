@@ -9,6 +9,7 @@ use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\FavoriteBook;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class BookController extends Controller
@@ -38,6 +39,8 @@ class BookController extends Controller
     {
         $data = $request->validated();
 
+        $uploadPath = Storage::disk('s3')->putFile('books/', $data['poster']);
+        $data['poster'] = Storage::disk('s3')->url($uploadPath);
         Book::create($data);
 
         return back()->with('success', 'You add book on your site!');

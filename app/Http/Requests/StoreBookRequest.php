@@ -26,7 +26,7 @@ class StoreBookRequest extends FormRequest
             'author' => ['required', 'string', 'max:255'],
             'published_at' => ['required', 'date_format:Y'],
             'pages' => ['required', 'numeric', 'min:1'],
-            'poster' => ['required', 'url'],
+            'poster' => ['required', 'image:jpeg,png,jpg,svg', 'max:2048'],
         ];
     }
 }

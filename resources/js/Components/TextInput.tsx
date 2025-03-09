@@ -10,8 +10,8 @@ import {
 type Props = {
     id?: string;
     name?: string;
-    value?: string | number;
-    type: "text" | "password" | "email" | "number";
+    value?: string | number | File | null;
+    type: "text" | "password" | "email" | "number" | "file";
     error?: string;
     className: string;
     autoComplete?: string;

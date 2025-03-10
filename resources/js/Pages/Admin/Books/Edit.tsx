@@ -1,19 +1,32 @@
 import InputField from "@/Components/Auth/InputField";
+import { DangerButton } from "@/Components/DangerButton";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
 import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
+import TextInput from "@/Components/TextInput";
+import useLabelPadding from "@/hooks/useLabelPadding";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { BookType } from "@/types/Book/Book";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { Head, useForm } from "@inertiajs/react";
-import { FormEvent, ReactNode } from "react";
+import { ChangeEvent, FormEvent, ReactNode } from "react";
 
 function Edit({ book }: { book: BookType }) {
-    const { setData, data, patch, processing, errors } = useForm({
+    const { setData, data, patch, processing, errors, progress } = useForm<{
+        title: string;
+        author: string;
+        pages: number;
+        published_at: number;
+        poster: File | string;
+    }>({
         title: book.title,
         author: book.author,
         pages: book.pages,
         published_at: book.published_at,
         poster: book.poster,
     });
+    const [padding, labelRef] = useLabelPadding();
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -58,14 +71,48 @@ function Edit({ book }: { book: BookType }) {
                         setData={setData}
                         error={errors.published_at}
                     />
-                    <InputField
-                        label="Poster: "
-                        id="poster"
-                        type="text"
-                        data={data.poster}
-                        setData={setData}
-                        error={errors.poster}
-                    />
+                    <div>
+                        <div className="relative">
+                            <InputLabel value="Poster: " ref={labelRef} />
+                            <TextInput
+                                id="poster"
+                                name="poster"
+                                type="file"
+                                error={errors.poster}
+                                className="block w-full mt-1"
+                                onChange={(
+                                    e: ChangeEvent<HTMLInputElement>
+                                ) => {
+                                    if (
+                                        e.target.files &&
+                                        e.target.files.length > 0
+                                    ) {
+                                        setData("poster", e.target.files[0]);
+                                    }
+                                }}
+                                required
+                                style={{
+                                    paddingLeft: `${padding}px`,
+                                }}
+                            />
+                            <div className="absolute flex items-center justify-center gap-3 -translate-y-1/2 right-3 top-1/2">
+                                {errors.poster && (
+                                    <Icon
+                                        icon="pajamas:error"
+                                        color="red"
+                                        width="20"
+                                        height="20"
+                                    />
+                                )}
+                            </div>
+                        </div>
+                        {progress && (
+                            <progress value={progress.percentage} max="100">
+                                {progress.percentage}%
+                            </progress>
+                        )}
+                        <InputError message={errors.poster} className="mt-2" />
+                    </div>
                     <OutlineButton
                         disabled={processing}
                         className="mt-4 max-w-[200px] col-start-1 col-end-1"

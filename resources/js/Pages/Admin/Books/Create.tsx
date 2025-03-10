@@ -5,6 +5,7 @@ import InputLabel from "@/Components/InputLabel";
 import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import TextInput from "@/Components/TextInput";
+import useLabelPadding from "@/hooks/useLabelPadding";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Head, useForm } from "@inertiajs/react";
@@ -31,16 +32,7 @@ function Create() {
         published_at: "",
         poster: "",
     });
-
-    const [padding, setPadding] = useState(0);
-    const labelRef = useRef<HTMLLabelElement>(null);
-
-    useEffect(() => {
-        if (labelRef.current) {
-            const labelWidth = labelRef.current.offsetWidth;
-            setPadding(labelWidth + 15);
-        }
-    }, []);
+    const [padding, labelRef] = useLabelPadding();
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

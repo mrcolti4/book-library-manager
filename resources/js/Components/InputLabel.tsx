@@ -2,7 +2,7 @@ import { ForwardedRef, forwardRef, ReactNode, RefObject } from "react";
 
 type Props = {
     value: string;
-    className: string;
+    className?: string;
     children?: ReactNode;
 };
 

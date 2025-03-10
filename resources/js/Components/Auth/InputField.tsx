@@ -3,6 +3,7 @@ import TextInput from "../TextInput";
 import InputError from "../InputError";
 import { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react";
 import InputLabel from "../InputLabel";
+import useLabelPadding from "@/hooks/useLabelPadding";
 
 type Props = {
     id: string;
@@ -25,15 +26,7 @@ export default function InputField({
     isFocused = false,
     children,
 }: Props) {
-    const [padding, setPadding] = useState(0);
-    const labelRef = useRef<HTMLLabelElement>(null);
-
-    useEffect(() => {
-        if (labelRef.current) {
-            const labelWidth = labelRef.current.offsetWidth;
-            setPadding(labelWidth + 15);
-        }
-    }, []);
+    const [padding, labelRef] = useLabelPadding();
 
     return (
         <div>

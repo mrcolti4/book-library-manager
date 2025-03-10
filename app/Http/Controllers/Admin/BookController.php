@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateBookRequest;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\FavoriteBook;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -17,7 +18,7 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         return Inertia::render('Admin/Books/Index', [
             'data' => BookResource::collection(Book::cursorPaginate(10)),
@@ -39,11 +40,13 @@ class BookController extends Controller
     {
         $data = $request->validated();
 
-        $uploadPath = Storage::disk('s3')->putFile('books/', $data['poster']);
+        $uploadPath = Storage::disk('s3')->putFile('books', $data['poster']);
+        $data['poster_short_url'] = $uploadPath;
         $data['poster'] = Storage::disk('s3')->url($uploadPath);
-        Book::create($data);
 
-        return back()->with('success', 'You add book on your site!');
+        $book = Book::create($data);
+
+        return to_route('admin.books.edit', ['book' => $book->id])->with('success', 'You add book to your library!');
     }
 
     /**
@@ -81,6 +84,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
+        Storage::disk('s3')->delete($book->poster_short_url);
         $book->delete();
 
         return back()->with('success', 'You remove book from your library!');

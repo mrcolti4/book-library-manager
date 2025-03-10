@@ -13,7 +13,8 @@ class Book extends Model
         'author',
         'published_at',
         'pages',
-        'poster',  
+        'poster',
+        'poster_short_url',  
     ];
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;

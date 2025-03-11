@@ -9,29 +9,34 @@ import useLabelPadding from "@/hooks/useLabelPadding";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { BookType } from "@/types/Book/Book";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import { ChangeEvent, FormEvent, ReactNode } from "react";
 
 function Edit({ book }: { book: BookType }) {
-    const { setData, data, patch, processing, errors, progress } = useForm<{
+    const { setData, data, post, processing, errors, progress } = useForm<{
         title: string;
         author: string;
         pages: number;
         published_at: number;
         poster: File | string;
+        _method: string;
     }>({
         title: book.title,
         author: book.author,
         pages: book.pages,
         published_at: book.published_at,
         poster: book.poster,
+        _method: "patch",
     });
     const [padding, labelRef] = useLabelPadding();
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(data);
 
-        patch(route("admin.books.update", book.id));
+        post(route("admin.books.update", book.id), {
+            forceFormData: true,
+        });
     };
 
     return (
@@ -90,7 +95,6 @@ function Edit({ book }: { book: BookType }) {
                                         setData("poster", e.target.files[0]);
                                     }
                                 }}
-                                required
                                 style={{
                                     paddingLeft: `${padding}px`,
                                 }}

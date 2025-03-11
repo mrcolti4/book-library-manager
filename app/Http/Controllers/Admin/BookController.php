@@ -20,8 +20,14 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
+        $sort = $request->query('sort', 'oldest');
+        $column = $request->query('column', 'created_at');
+
+        $direction = $sort === 'oldest' ? 'asc' : 'desc';
+        $books = Book::orderBy($column, $direction)->paginate(10)->withQueryString();
+
         return Inertia::render('Admin/Books/Index', [
-            'data' => BookResource::collection(Book::cursorPaginate(10)),
+            'data' => BookResource::collection($books),
         ]);
     }
 
@@ -73,7 +79,15 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         $data = $request->validated();
-        
+
+        if($data['poster'] !== $book->poster && null !== $book->poster_short_url) {
+            Storage::disk('s3')->delete($book->poster_short_url);
+        }
+
+        $uploadPath = Storage::disk('s3')->putFile('books', $data['poster']);
+        $data['poster_short_url'] = $uploadPath;
+        $data['poster'] = Storage::disk('s3')->url($uploadPath);
+
         $book->update($data);
 
         return back()->with('success', 'You update book successfully!');

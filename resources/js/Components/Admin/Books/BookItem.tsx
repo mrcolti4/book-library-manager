@@ -19,18 +19,20 @@ export default function BookItem({ book }: { book: BookType }) {
 
     return (
         <TableRow className="transition hover:bg-dark-950">
-            <TableColumn className="w-1/12">{book.id}</TableColumn>
+            <TableColumn className="hidden w-1/12 md:table-cell">
+                {book.id}
+            </TableColumn>
             <TableColumn className="w-1/6">{book.title}</TableColumn>
             <TableColumn className="w-1/6">{book.author}</TableColumn>
-            <TableColumn className="w-1/6">
-                {new Date(book.created_at).toLocaleString("en-UK")}
+            <TableColumn className="hidden w-1/6 lg:table-cell">
+                {new Date(book.created_at).toLocaleString()}
             </TableColumn>
-            <TableColumn className="w-1/6">
+            <TableColumn className="hidden w-1/6 lg:table-cell">
                 {book.updated_at
-                    ? new Date(book.updated_at).toLocaleString("en-UK")
+                    ? new Date(book.updated_at).toLocaleString()
                     : "-"}
             </TableColumn>
-            <TableColumn className="flex w-1/6 gap-3">
+            <TableColumn className="flex w-2/6 gap-3">
                 <OutlineButton
                     onClick={handleUpdate}
                     disabled={false}
@@ -38,7 +40,11 @@ export default function BookItem({ book }: { book: BookType }) {
                 >
                     Update
                 </OutlineButton>
-                <DangerButton disabled={false} onClick={handleDelete}>
+                <DangerButton
+                    className="hidden lg:block"
+                    disabled={false}
+                    onClick={handleDelete}
+                >
                     Delete
                 </DangerButton>
             </TableColumn>

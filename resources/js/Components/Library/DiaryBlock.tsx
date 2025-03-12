@@ -13,7 +13,7 @@ export default function DiaryBlock({ records, pages }: props) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="p-5 space-y-4 bg-dark-800 rounded-xl"
+            className="w-full p-5 space-y-4 bg-dark-800 rounded-xl"
         >
             {records.length > 0 ? (
                 records.map((record) => (

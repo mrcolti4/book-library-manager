@@ -48,51 +48,58 @@ export function StopReadingSection({
                     To stop
                 </OutlineButton>
             </motion.form>
-            <div className="flex items-center justify-between">
-                <Title>
-                    {activeBlock === "diary" ? "Diary" : "Statistics"}
-                </Title>
-                <div className="flex items-center gap-2">
-                    <button
-                        onClick={() => setActiveBlock("diary")}
-                        className={"text-sm font-bold text-white "}
-                    >
-                        <Icon
-                            icon="material-symbols:hourglass-empty-rounded"
-                            fontSize={20}
-                            color={activeBlock === "diary" ? "white" : "gray"}
-                        />
-                    </button>
-                    <button
-                        onClick={() => setActiveBlock("statistics")}
-                        className={"text-sm font-bold text-white "}
-                    >
-                        <Icon
-                            icon="material-symbols:pie-chart-outline"
-                            fontSize={20}
-                            color={
-                                activeBlock === "statistics" ? "white" : "gray"
-                            }
-                        />
-                    </button>
+            <div className="flex flex-col justify-start w-full gap-5 mt-4 lg:w-auto max-lg:gap-3">
+                <div className="flex gap-4 lg:gap-2">
+                    <Title>
+                        {activeBlock === "diary" ? "Diary" : "Statistics"}
+                    </Title>
+                    <div className="flex items-center gap-4 lg:gap-2">
+                        <button
+                            onClick={() => setActiveBlock("diary")}
+                            className={"text-sm font-bold text-white "}
+                        >
+                            <Icon
+                                icon="material-symbols:hourglass-empty-rounded"
+                                fontSize={20}
+                                color={
+                                    activeBlock === "diary" ? "white" : "gray"
+                                }
+                            />
+                        </button>
+                        <button
+                            onClick={() => setActiveBlock("statistics")}
+                            className={"text-sm font-bold text-white "}
+                        >
+                            <Icon
+                                icon="material-symbols:pie-chart-outline"
+                                fontSize={20}
+                                color={
+                                    activeBlock === "statistics"
+                                        ? "white"
+                                        : "gray"
+                                }
+                            />
+                        </button>
+                    </div>
                 </div>
+
+                <AnimatePresence mode="wait">
+                    {activeBlock === "diary" && (
+                        <DiaryBlock
+                            key="diary"
+                            records={records}
+                            pages={book.pages}
+                        />
+                    )}
+                    {activeBlock === "statistics" && (
+                        <StatisticBlock
+                            key="statistics"
+                            bookPages={book.pages}
+                            readPages={records[0] ? records[0].page_stop : 0}
+                        />
+                    )}
+                </AnimatePresence>
             </div>
-            <AnimatePresence mode="wait">
-                {activeBlock === "diary" && (
-                    <DiaryBlock
-                        key="diary"
-                        records={records}
-                        pages={book.pages}
-                    />
-                )}
-                {activeBlock === "statistics" && (
-                    <StatisticBlock
-                        key="statistics"
-                        bookPages={book.pages}
-                        readPages={records[0] ? records[0].page_stop : 0}
-                    />
-                )}
-            </AnimatePresence>
         </>
     );
 }

@@ -13,7 +13,7 @@ export default function StatisticBlock({ bookPages, readPages }: props) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="flex flex-col items-center gap-2"
+            className="flex flex-col items-center w-full gap-2"
         >
             <p className="hidden lg:block">
                 Each page, each chapter is a new round of knowledge, a new step

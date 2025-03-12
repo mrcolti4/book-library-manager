@@ -83,16 +83,18 @@ function Index({ data }: { data: PaginateData<BookType> }) {
                 <table className="w-full border-collapse table-fixed">
                     <thead>
                         <TableRow className="!border-b-0">
-                            <TableColumn className="w-1/12">ID</TableColumn>
+                            <TableColumn className="hidden w-1/12 md:table-cell">
+                                ID
+                            </TableColumn>
                             <TableColumn className="w-1/6">Author</TableColumn>
                             <TableColumn className="w-1/6">Title</TableColumn>
-                            <TableColumn className="w-1/6">
+                            <TableColumn className="hidden w-1/6 lg:table-cell">
                                 Created at
                             </TableColumn>
-                            <TableColumn className="w-1/6">
+                            <TableColumn className="hidden w-1/6 lg:table-cell">
                                 Updated at
                             </TableColumn>
-                            <TableColumn className="w-1/6">Actions</TableColumn>
+                            <TableColumn className="w-2/6">Actions</TableColumn>
                         </TableRow>
                     </thead>
                     <tbody>

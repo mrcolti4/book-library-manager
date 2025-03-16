@@ -59,6 +59,16 @@ export default function AuthenticatedLayout({
                                     >
                                         My library
                                     </NavLink>
+                                    {user.role === "admin" && (
+                                        <NavLink
+                                            href={route("admin.index")}
+                                            active={route()
+                                                .current()
+                                                ?.startsWith("admin.")}
+                                        >
+                                            Admin panel
+                                        </NavLink>
+                                    )}
                                 </div>
                             </div>
 
@@ -163,14 +173,26 @@ export default function AuthenticatedLayout({
                             >
                                 Home
                             </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("library.index")}
+                                active={route().current("library.index")}
+                            >
+                                Library
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("admin.index")}
+                                active={route().current("home")}
+                            >
+                                Admin panel
+                            </ResponsiveNavLink>
                         </div>
 
                         <div className="pt-4 pb-1 border-t border-gray-200">
                             <div className="px-4">
-                                <div className="text-base font-medium text-gray-800">
+                                <div className="text-base font-medium text-white">
                                     {user.name}
                                 </div>
-                                <div className="text-sm font-medium text-gray-500">
+                                <div className="text-sm font-medium text-white">
                                     {user.email}
                                 </div>
                             </div>

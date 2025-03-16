@@ -21,6 +21,7 @@ class BookFactory extends Factory
             'author' => fake()->name(),
             'published_at' => fake()->year(),
             'poster' => fake()->imageUrl(),
+            'poster_short_url' => '',
             'pages' => fake()->numberBetween(100, 1000),
         ];
     }

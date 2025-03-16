@@ -11,7 +11,7 @@ class UpdateBookRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class UpdateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'author' => ['required', 'string', 'max:255'],
+            'published_at' => ['required', 'date_format:Y'],
+            'pages' => ['required', 'numeric', 'min:1'],
+            'poster' => $this->getPosterValidationRule('poster'),
         ];
+    }
+
+    private function getPosterValidationRule(string $key): array
+    {
+        if ($this->hasFile($key)) {
+            return ['image:jpeg,png,jpg,svg', 'max:2048'];
+        }
+        return ['url'];
     }
 }

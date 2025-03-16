@@ -1,4 +1,4 @@
-import DangerButton from "@/Components/DangerButton";
+import { DangerButton } from "@/Components/DangerButton";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import SecondaryButton from "@/Components/SecondaryButton";
@@ -92,7 +92,7 @@ export default function DeleteUserForm({ className = "" }) {
                             onChange={(e) =>
                                 setData("password", e.target.value)
                             }
-                            className="mt-1 block w-3/4"
+                            className="block w-3/4 mt-1"
                             isFocused
                             placeholder="Password"
                         />
@@ -103,7 +103,7 @@ export default function DeleteUserForm({ className = "" }) {
                         />
                     </div>
 
-                    <div className="mt-6 flex justify-end">
+                    <div className="flex justify-end mt-6">
                         <SecondaryButton onClick={closeModal}>
                             Cancel
                         </SecondaryButton>

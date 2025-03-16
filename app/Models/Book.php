@@ -10,6 +10,14 @@ class Book extends Model
 {
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;
+    protected $fillable = [
+        'title',
+        'author',
+        'published_at',
+        'pages',
+        'poster',
+        'poster_short_url',  
+    ];
 
     public function library(): HasMany
     {

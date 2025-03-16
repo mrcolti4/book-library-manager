@@ -38,13 +38,15 @@ export function StartReadingSection({
                     To start
                 </OutlineButton>
             </motion.form>
-            <Title>Progress</Title>
-            <p className="mb-16 text-sm">
-                Here you will see when and how much you read. To record, click
-                on the red button above.
-            </p>
-            <div className="mx-auto inline-flex items-center justify-center p-2 rounded-full bg-dark-800 h-[100px] w-[100px]">
-                <img src="/images/star-icon.png" width={50} height={70} />
+            <div className="flex flex-col justify-center gap-5">
+                <Title>Progress</Title>
+                <p className="mb-16 text-sm">
+                    Here you will see when and how much you read. To record,
+                    click on the red button above.
+                </p>
+                <div className="mx-auto inline-flex items-center justify-center p-2 rounded-full bg-dark-800 h-[100px] w-[100px]">
+                    <img src="/images/star-icon.png" width={50} height={70} />
+                </div>
             </div>
         </>
     );

@@ -95,7 +95,7 @@ export default function Home({
                         </div>
                         <Link
                             className="inline-flex items-center justify-between underline"
-                            href={route("profile.edit")}
+                            href={route("library.index")}
                         >
                             My library
                             <Icon

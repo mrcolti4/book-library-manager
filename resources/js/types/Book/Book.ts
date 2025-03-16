@@ -8,3 +8,11 @@ export type BookType = {
     created_at: string;
     updated_at: string;
 };
+
+export type EditBook = {
+    title: string;
+    author: string;
+    pages: number;
+    published_at: number;
+    poster: File | string | null;
+}

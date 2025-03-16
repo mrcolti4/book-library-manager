@@ -26,7 +26,7 @@ export default function FlashMessage({
                 duration: 0.3,
             }}
             className={
-                "absolute inline-flex p-4 text-lg font-semibold text-white rounded-lg bottom-4 left-4 " +
+                "absolute inline-flex p-4 text-lg font-semibold text-white rounded-lg bottom-4 left-4 z-20 " +
                 className
             }
         >

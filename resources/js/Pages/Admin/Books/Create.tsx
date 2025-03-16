@@ -9,14 +9,7 @@ import useLabelPadding from "@/hooks/useLabelPadding";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Head, useForm } from "@inertiajs/react";
-import {
-    ChangeEvent,
-    FormEvent,
-    ReactNode,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { ChangeEvent, FormEvent, ReactNode } from "react";
 
 function Create() {
     const { data, setData, post, processing, errors, progress } = useForm<{

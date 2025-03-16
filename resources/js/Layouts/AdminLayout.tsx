@@ -28,14 +28,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         }
     }, [props.flash]);
 
-    const handleSidebarClick = () => {};
-
     return (
         <AuthenticatedLayout>
             <AnimatePresence>
                 {success && (
                     <FlashMessage
-                        className="bg-emerald-700/50"
+                        className="bg-emerald-700/80"
                         setMessage={setSuccess}
                     >
                         {success}
@@ -43,24 +41,14 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 )}
                 {error && (
                     <FlashMessage
-                        className="bg-rose-700/50"
+                        className="bg-rose-700/80"
                         setMessage={setError}
                     >
                         {error}
                     </FlashMessage>
                 )}
             </AnimatePresence>
-            <div className="relative flex gap-5">
-                <button
-                    onClick={() => setIsShowingSidebar(true)}
-                    className="absolute z-10 inline-flex rounded-md top-2 left-2 lg:hidden bg-dark-950"
-                >
-                    <Icon
-                        icon="material-symbols:menu-rounded"
-                        color="white"
-                        fontSize={30}
-                    />
-                </button>
+            <div className="relative flex flex-col gap-5 lg:flex-row">
                 <Transition
                     as="div"
                     className="relative"
@@ -72,9 +60,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     leaveFrom="translate-x-0"
                     leaveTo="-translate-x-full"
                 >
-                    <SectionWrapper className="absolute p-5 lg:bg-dark-800 bg-dark-950 lg:static lg:w-full">
+                    <SectionWrapper className="p-5 lg:w-full">
                         <ul className="flex flex-col gap-4">
-                            <li>
+                            <li className="flex max-lg:items-center lg:flex-col">
                                 <NavLink
                                     isActive={isBookActive}
                                     href="/admin/books"
@@ -87,7 +75,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                     Books
                                 </NavLink>
                                 {isBookActive && (
-                                    <ul className="flex flex-col gap-2 pl-4 mt-2">
+                                    <ul className="flex gap-4 pl-4 max-lg:items-center lg:gap-2 lg:mt-2 lg:flex-col">
                                         <li>
                                             <NavLink
                                                 isActive={route().current(
@@ -112,7 +100,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                     </ul>
                                 )}
                             </li>
-                            <li>
+                            <li className="flex max-lg:items-center lg:flex-col">
                                 <NavLink
                                     isActive={isUserActive}
                                     href="/admin/users"
@@ -125,7 +113,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                     Users
                                 </NavLink>
                                 {isUserActive && (
-                                    <ul className="flex flex-col gap-2 pl-4 mt-2">
+                                    <ul className="flex gap-2 pl-4 max-lg:items-center lg:flex-col lg:mt-2">
                                         <li>
                                             <NavLink
                                                 isActive={route().current(

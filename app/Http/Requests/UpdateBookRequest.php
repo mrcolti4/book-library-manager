@@ -26,7 +26,15 @@ class UpdateBookRequest extends FormRequest
             'author' => ['required', 'string', 'max:255'],
             'published_at' => ['required', 'date_format:Y'],
             'pages' => ['required', 'numeric', 'min:1'],
-            'poster' => ['required', 'image:jpeg,png,jpg,svg', 'max:2048'],
+            'poster' => $this->getPosterValidationRule('poster'),
         ];
+    }
+
+    private function getPosterValidationRule(string $key): array
+    {
+        if ($this->hasFile($key)) {
+            return ['image:jpeg,png,jpg,svg', 'max:2048'];
+        }
+        return ['url'];
     }
 }

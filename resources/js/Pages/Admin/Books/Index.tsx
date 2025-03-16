@@ -58,7 +58,7 @@ function Index({ data }: { data: PaginateData<BookType> }) {
             <SectionWrapper>
                 <HeadTitle>All books</HeadTitle>
                 <form
-                    className="flex items-center justify-center gap-5 my-5"
+                    className="flex flex-col gap-5 my-5 md:items-center md:justify-center md:flex-row"
                     onSubmit={handleSubmit}
                 >
                     <FormSelect

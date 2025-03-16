@@ -79,18 +79,22 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         $data = $request->validated();
-
+        
         if($data['poster'] !== $book->poster && null !== $book->poster_short_url) {
             Storage::disk('s3')->delete($book->poster_short_url);
         }
-
-        $uploadPath = Storage::disk('s3')->putFile('books', $data['poster']);
-        $data['poster_short_url'] = $uploadPath;
-        $data['poster'] = Storage::disk('s3')->url($uploadPath);
+        if($request->file('poster')) {
+            $uploadPath = Storage::disk('s3')->putFile('books', $data['poster']);
+            $data['poster_short_url'] = $uploadPath;
+            $data['poster'] = Storage::disk('s3')->url($uploadPath);
+        }
 
         $book->update($data);
-
-        return back()->with('success', 'You update book successfully!');
+        $book->refresh();
+        
+        return redirect()
+            ->route('admin.books.edit', ['book' => $book])
+            ->with('success', 'You update book successfully!');
     }
 
     /**

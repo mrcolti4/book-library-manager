@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Book extends Model
 {
+    /** @use HasFactory<\Database\Factories\BookFactory> */
+    use HasFactory;
     protected $fillable = [
         'title',
         'author',
@@ -16,8 +18,6 @@ class Book extends Model
         'poster',
         'poster_short_url',  
     ];
-    /** @use HasFactory<\Database\Factories\BookFactory> */
-    use HasFactory;
 
     public function library(): HasMany
     {

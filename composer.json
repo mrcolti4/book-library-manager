@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.0",
         "mongodb/laravel-mongodb": "^5.1",
+        "rappasoft/laravel-authentication-log": "^4.0",
         "tightenco/ziggy": "^2.5"
     },
     "require-dev": {

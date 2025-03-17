@@ -1,5 +1,6 @@
 <?php
 
+use App\Log\MongoLogger;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -127,6 +128,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'mongo' => [
+            'driver' => 'custom',
+            'via' => MongoLogger::class,
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
     ],
 
 ];

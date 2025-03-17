@@ -10,6 +10,7 @@ use App\Models\Book;
 use App\Models\FavoriteBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -78,6 +79,8 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
+        Log::channel('mongo')
+            ->debug(\sprintf('Book with %d id was update', $book->id));
         $data = $request->validated();
         
         if($data['poster'] !== $book->poster && null !== $book->poster_short_url) {

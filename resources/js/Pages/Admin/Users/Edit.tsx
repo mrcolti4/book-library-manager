@@ -1,3 +1,6 @@
+import TableColumn from "@/Components/Admin/TableColumn";
+import TableRow from "@/Components/Admin/TableRow";
+import AuthLogItem from "@/Components/Admin/Users/AuthLogItem";
 import { BlockUserModal } from "@/Components/Admin/Users/BlockUserModal";
 import { UnblockUserModal } from "@/Components/Admin/Users/UnblockUserModal";
 import InputField from "@/Components/Auth/InputField";
@@ -5,13 +8,22 @@ import { DangerButton } from "@/Components/DangerButton";
 import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import { SuccessButton } from "@/Components/SuccessButton";
+import Title from "@/Components/Title";
 import { useModalContext } from "@/hooks/useModalContext";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { AuthenticateUserData } from "@/types";
-import { Head, useForm } from "@inertiajs/react";
+import { UserAuthLog } from "@/types/Admin/User";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import { FormEvent, ReactNode } from "react";
 
-function Edit({ user }: { user: AuthenticateUserData }) {
+function Edit({
+    user,
+    userAuthLogs,
+}: {
+    user: AuthenticateUserData;
+    userAuthLogs: UserAuthLog[];
+}) {
+    const authUser: AuthenticateUserData = usePage().props?.auth?.user;
     const { setModal } = useModalContext();
     const { setData, data, patch, processing, errors } = useForm({
         name: user.name,
@@ -60,23 +72,47 @@ function Edit({ user }: { user: AuthenticateUserData }) {
                         Update
                     </OutlineButton>
                     <div className="mt-4">
-                        {user.blocked_at ? (
-                            <SuccessButton
-                                onClick={handleUnblock}
-                                disabled={false}
-                            >
-                                Unblock
-                            </SuccessButton>
-                        ) : (
-                            <DangerButton
-                                onClick={handleBlock}
-                                disabled={false}
-                            >
-                                Block
-                            </DangerButton>
-                        )}
+                        {authUser.id !== user.id &&
+                            (user.blocked_at ? (
+                                <SuccessButton
+                                    onClick={handleUnblock}
+                                    disabled={false}
+                                >
+                                    Unblock
+                                </SuccessButton>
+                            ) : (
+                                <DangerButton
+                                    onClick={handleBlock}
+                                    disabled={false}
+                                >
+                                    Block
+                                </DangerButton>
+                            ))}
                     </div>
                 </form>
+            </SectionWrapper>
+            <SectionWrapper>
+                <Title>User auth logs</Title>
+                <table className="w-full mt-4 border-collapse table-fixed">
+                    <thead>
+                        <TableRow className="!border-b-0">
+                            <TableColumn className="hidden w-1/5 md:table-cell">
+                                IP Address
+                            </TableColumn>
+                            <TableColumn className="w-1/3">
+                                Action at
+                            </TableColumn>
+                            <TableColumn className="w-1/5">
+                                Action status
+                            </TableColumn>
+                        </TableRow>
+                    </thead>
+                    <tbody>
+                        {userAuthLogs.map((log) => (
+                            <AuthLogItem key={log.id} log={log} />
+                        ))}
+                    </tbody>
+                </table>
             </SectionWrapper>
         </>
     );

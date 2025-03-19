@@ -11,12 +11,12 @@ import { BookType } from "@/types/Book/Book";
 
 export default function PaginationSection({
     books,
-    nextPageUrl,
-    prevPageUrl,
+    next,
+    prev,
 }: {
     books: BookType[];
-    nextPageUrl: string;
-    prevPageUrl: string | null;
+    next: string | null;
+    prev: string | null;
 }) {
     const perPage = usePerPage();
 
@@ -29,12 +29,13 @@ export default function PaginationSection({
     };
 
     const handlePrevButton = async () => {
-        if (!prevPageUrl) return;
-        loadBooks(prevPageUrl);
+        if (!prev) return;
+        loadBooks(prev);
     };
 
     const handleNextButton = async () => {
-        loadBooks(nextPageUrl);
+        if (!next) return;
+        loadBooks(next);
     };
 
     return (
@@ -44,33 +45,35 @@ export default function PaginationSection({
                 <div className="flex items-center justify-center gap-2">
                     <PaginationButton
                         onClick={handlePrevButton}
-                        disabled={false}
+                        disabled={prev ? false : true}
                     >
                         <Icon
                             icon="material-symbols:chevron-left-rounded"
                             width="30"
                             height="30"
-                            color={prevPageUrl !== null ? "white" : "gray"}
+                            color={prev !== null ? "white" : "gray"}
                         />
                     </PaginationButton>
                     <PaginationButton
                         onClick={handleNextButton}
-                        disabled={false}
+                        disabled={next ? false : true}
                     >
                         <Icon
                             icon="material-symbols:chevron-right-rounded"
                             width="30"
                             height="30"
-                            color={nextPageUrl !== null ? "white" : "gray"}
+                            color={next !== null ? "white" : "gray"}
                         />
                     </PaginationButton>
                 </div>
             </div>
             <div className="grid grid-cols-2 grid-rows-1 gap-5 md:grid-cols-4 xl:grid-cols-5 xl:grid-rows-2">
                 <AnimatePresence mode="wait">
-                    {books.map((book) => (
-                        <Book key={book.id} book={book} />
-                    ))}
+                    {books.length > 0 ? (
+                        books.map((book) => <Book key={book.id} book={book} />)
+                    ) : (
+                        <p>No books found</p>
+                    )}
                 </AnimatePresence>
             </div>
         </>

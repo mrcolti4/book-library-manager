@@ -99,4 +99,11 @@ class UserController extends Controller
 
         return back()->with('success', 'You unblock user!');
     }
+
+    public function logs(User $user)
+    {
+        return Inertia::render('Admin/Users/Logs', [
+            'logs' => UserLogsResource::collection($user->authentications)->collection,
+        ]);
+    }
 }

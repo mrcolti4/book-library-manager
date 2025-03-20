@@ -26,10 +26,10 @@ export default function AuthLogItem({ log }: { log: UserAuthLog }) {
             actionStatus = "uknown";
     }
     const classes = clsx("max-md:w-1/3 w-1/5", {
-        "text-rose-500": actionStatus === "failed_login",
-        "text-green-500": actionStatus === "login",
-        "text-yellow-500": actionStatus === "logout",
-        "text-gray-500": actionStatus === "uknown",
+        "!text-rose-500": actionStatus === "failed_login",
+        "!text-green-500": actionStatus === "login",
+        "!text-yellow-500": actionStatus === "logout",
+        "!text-gray-500": actionStatus === "uknown",
     });
 
     return (

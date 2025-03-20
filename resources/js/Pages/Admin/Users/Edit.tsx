@@ -13,7 +13,7 @@ import { useModalContext } from "@/hooks/useModalContext";
 import AdminLayout from "@/Layouts/AdminLayout";
 import { AuthenticateUserData } from "@/types";
 import { UserAuthLog } from "@/types/Admin/User";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { FormEvent, ReactNode } from "react";
 
 function Edit({
@@ -108,11 +108,19 @@ function Edit({
                         </TableRow>
                     </thead>
                     <tbody>
-                        {userAuthLogs.map((log) => (
+                        {userAuthLogs.slice(0, 5).map((log) => (
                             <AuthLogItem key={log.id} log={log} />
                         ))}
                     </tbody>
                 </table>
+                <OutlineButton disabled={false} className="mt-4 rounded-xl">
+                    <Link
+                        href={route("admin.users.logs", user)}
+                        disabled={false}
+                    >
+                        Read more logs
+                    </Link>
+                </OutlineButton>
             </SectionWrapper>
         </>
     );

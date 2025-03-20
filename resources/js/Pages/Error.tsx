@@ -13,10 +13,6 @@ function Error({
     file: string;
     line: string;
 }) {
-    console.log(message);
-    console.log(file);
-    console.log(line);
-
     return (
         <div>
             <h1>{status}</h1>

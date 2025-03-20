@@ -7,7 +7,6 @@ import Wrapper from "@/Components/Home/Wrapper";
 import AccentWord from "@/Components/Home/AccentWord";
 import Circle from "@/Components/Home/Circle";
 import PaginationSection from "@/Components/Home/PaginationSection";
-import OutlineButton from "@/Components/OutlineButton";
 import SectionWrapper from "@/Components/SectionWrapper";
 import Title from "@/Components/Title";
 
@@ -17,11 +16,7 @@ import usePerPage from "@/hooks/usePerPage";
 import { PaginateData } from "@/types/PaginateData";
 import { BookType } from "@/types/Book/Book";
 import { Library } from "@/types/Library/Library";
-
-type FormState = {
-    title: string;
-    author: string;
-};
+import SearchForm from "@/Components/Home/SearchForm";
 
 export default function Home({
     books,
@@ -31,10 +26,6 @@ export default function Home({
     library: Library[];
 }) {
     const perPage = usePerPage();
-    const { data, setData, post, processing, reset } = useForm<FormState>({
-        title: "",
-        author: "",
-    });
 
     return (
         <AuthenticatedLayout userLibrary={library}>
@@ -42,37 +33,7 @@ export default function Home({
 
             <div className="flex flex-col gap-[10px] lg:flex-row">
                 <SectionWrapper className="flex flex-col gap-5 md:flex-row lg:flex-col lg:w-1/3">
-                    <motion.form
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        transition={{
-                            duration: 0.3,
-                        }}
-                        className="flex flex-col gap-2 md:w-1/2 lg:w-auto"
-                    >
-                        <h3 className="text-sm text-white">Filters: </h3>
-                        <InputField
-                            id="title"
-                            type="text"
-                            label="Book title: "
-                            data={data.title}
-                            setData={setData}
-                        />
-                        <InputField
-                            id="author"
-                            type="text"
-                            label="The author: "
-                            data={data.author}
-                            setData={setData}
-                        />
-                        <OutlineButton
-                            className="py-3 px-[29px] md:px-7 rounded-[30px] md:py-4 md:leading-[18px] max-sm:justify-center mt-4 w-[130px] capitalize"
-                            disabled={processing}
-                        >
-                            To apply
-                        </OutlineButton>
-                    </motion.form>
+                    <SearchForm />
                     <Wrapper className="flex flex-col gap-5 md:w-1/2 lg:w-auto">
                         <Title>Start your workout</Title>
                         <div className="flex gap-3">
@@ -120,8 +81,8 @@ export default function Home({
                 <SectionWrapper className="lg:w-2/3">
                     <PaginationSection
                         books={books.data}
-                        nextPageUrl={books.links.next}
-                        prevPageUrl={books.links.prev}
+                        next={books.links.next}
+                        prev={books.links.prev}
                     />
                 </SectionWrapper>
             </div>

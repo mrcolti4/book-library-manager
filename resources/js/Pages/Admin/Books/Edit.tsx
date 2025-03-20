@@ -48,7 +48,6 @@ function Edit({ book }: { book: BookType }) {
             onFinish: () => reset(),
         });
     };
-    console.log(isDirty);
 
     const handleDelete = () => {
         setModal(<DeleteBookModal id={book.id} />);

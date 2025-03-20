@@ -13,7 +13,8 @@ class BookHomeController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $books = Book::cursorPaginate(10);
+        $search = $request->get('search', '');
+        $books = Book::search($search)->paginate(10);
 
         return Inertia::render('Home', [
             'books' => BookResource::collection($books),

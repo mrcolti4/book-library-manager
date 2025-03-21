@@ -15,6 +15,7 @@ Route::group([
     })->name('index');
     Route::post('users/{user}/block', [UserController::class, 'block'])->name('users.block');
     Route::post('users/{user}/unblock', [UserController::class, 'unblock'])->name('users.unblock');
+    Route::get('/users/{user}/logs', [UserController::class, 'logs'])->name('users.logs');
     Route::resource('users', UserController::class);
     Route::resource('books', BookController::class);
 });
